@@ -1,0 +1,133 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
+          "branch": null,
+          "revision": "eaf6e622dd41b07b251d8f01752eab31bc811493",
+          "version": "5.4.1"
+        }
+      },
+      {
+        "package": "CocoaAsyncSocket",
+        "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket.git",
+        "state": {
+          "branch": null,
+          "revision": "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
+          "version": "7.6.5"
+        }
+      },
+      {
+        "package": "CocoaLumberjack",
+        "repositoryURL": "https://github.com/CocoaLumberjack/CocoaLumberjack.git",
+        "state": {
+          "branch": null,
+          "revision": "b06614d2373a9830c87817144d47ce654980a2d7",
+          "version": "3.7.0"
+        }
+      },
+      {
+        "package": "InputBarAccessoryView",
+        "repositoryURL": "https://github.com/nathantannar4/InputBarAccessoryView",
+        "state": {
+          "branch": null,
+          "revision": "999423a8d7e29520ef0777f71af689cf4f25d65d",
+          "version": "5.3.0"
+        }
+      },
+      {
+        "package": "KissXML",
+        "repositoryURL": "https://github.com/robbiehanson/KissXML.git",
+        "state": {
+          "branch": null,
+          "revision": "990cdef080213b5a3f0d9709b845d553bd3ddb97",
+          "version": "5.3.3"
+        }
+      },
+      {
+        "package": "libidn",
+        "repositoryURL": "https://github.com/chrisballinger/libidn-framework.git",
+        "state": {
+          "branch": null,
+          "revision": "fc2700ce83a279ac121aa9f59eedacfadd24ab5b",
+          "version": "1.35.1"
+        }
+      },
+      {
+        "package": "MBProgressHUD",
+        "repositoryURL": "https://github.com/jdg/MBProgressHUD",
+        "state": {
+          "branch": null,
+          "revision": "bca42b801100b2b3a4eda0ba8dd33d858c780b0d",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "MessageKit",
+        "repositoryURL": "https://github.com/MessageKit/MessageKit",
+        "state": {
+          "branch": null,
+          "revision": "4e97e02d85a69a8af609b6861a8d176c4387aaea",
+          "version": "3.5.1"
+        }
+      },
+      {
+        "package": "ProgressHUD",
+        "repositoryURL": "https://github.com/relatedcode/ProgressHUD",
+        "state": {
+          "branch": "master",
+          "revision": "e5a9b26342e3612d8697490790b896eda1cb3bfa",
+          "version": null
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa",
+        "state": {
+          "branch": null,
+          "revision": "c8d6918a2d6468e6aef4f8189e693f72db1c5263",
+          "version": "10.7.1"
+        }
+      },
+      {
+        "package": "RealmDatabase",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "b512650aec42d1ccd37cf5b455038b391d4c941a",
+          "version": "10.5.4"
+        }
+      },
+      {
+        "package": "RxSwift",
+        "repositoryURL": "https://github.com/ReactiveX/RxSwift",
+        "state": {
+          "branch": null,
+          "revision": "7e01c05f25c025143073eaa3be3532f9375c614b",
+          "version": "6.1.0"
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
+        }
+      },
+      {
+        "package": "XMPPFramework",
+        "repositoryURL": "https://github.com/robbiehanson/XMPPFramework",
+        "state": {
+          "branch": null,
+          "revision": "76969d13e84a9b04359b761a5b49f3ccdbef6794",
+          "version": "4.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
