@@ -24,12 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         LocationManager.shared.startUpdating()
-        
-        let _ = XMPPManager.shared
         let realm = try! Realm()
         try! realm.write {
             realm.deleteAll()
         }
+        let _ = XMPPManager.shared
+
 //        let _ = TClass1.init().startTestListening()
         
 //        delay(6) {

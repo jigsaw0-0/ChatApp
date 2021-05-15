@@ -24,7 +24,7 @@ class XMPPRecentListener {
     
     func pollForRecentChats(completion : @escaping (_ allRecents :[RecentChat]) -> Void) {
         
-        allLocalMessages = realm.objects(LocalMessage.self).sorted(byKeyPath: kDATE, ascending: true)
+        allLocalMessages = realm.objects(LocalMessage.self).sorted(byKeyPath: kDATE, ascending: false)
         
         
         notificationToken = allLocalMessages.observe { (change : RealmCollectionChange) in
@@ -38,6 +38,7 @@ class XMPPRecentListener {
                 
                 recentChats.append(RecentChat.init(id: value.id, chatRoomId: value.chatRoomId, senderId: value.senderId, senderName: value.senderName, receiverId: value.senderId, receiverName: "ReceiverName", date: value.date, memberIds: [], lastMessage: value.message, unreadCounter: 0, avatarLink: ""))
             }
+            recentChats = recentChats.reversed()
             completion(recentChats)
             // let recentChats = [RecentChat]()
             

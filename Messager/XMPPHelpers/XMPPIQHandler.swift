@@ -16,10 +16,10 @@ extension XMPPMessageListener {
        // print("\nReceived IQ Type ->\(iq.type ?? "") - \(iq.elementID ?? "")")
         let fin = iq.elements(forName: "fin")
         if fin.count > 0, let iqSet = fin[0].resultSet {
-            if let last = iqSet.last, let queryId = fin[0].attributeStringValue(forName: "queryid"), let complete =  fin[0].attributeStringValue(forName: "complete") {
-                if complete == "true" {
+            if let queryId = fin[0].attributeStringValue(forName: "queryid"), let complete =  fin[0].attributeStringValue(forName: "complete") {
+               // if complete == "true" {
                     finishWorker(with: queryId)
-                }
+               // }
          //       print("Fin queryId ->\(queryId)")
          //       print("Received last \(last)")
 

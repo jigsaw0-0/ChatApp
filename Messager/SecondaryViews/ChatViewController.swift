@@ -73,7 +73,7 @@ class ChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.chatId = chatId
-        self.recipientId = recipientId
+        self.recipientId = chatId
         self.recipientName = recipientName
     }
     
@@ -335,8 +335,9 @@ class ChatViewController: MessagesViewController {
     }
 
     func messageSend(text: String?, photo: UIImage?, video: Video?, audio: String?, location: String?, audioDuration: Float = 0.0) {
-        
-        OutgoingMessage.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio, audioDuration: audioDuration, location: location, memberIds: [User.currentId, recipientId])
+        if User.currentUserXMPP != nil {
+            OutgoingMessage.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio, audioDuration: audioDuration, location: location, memberIds: [recipientId])
+        }
     }
 
     

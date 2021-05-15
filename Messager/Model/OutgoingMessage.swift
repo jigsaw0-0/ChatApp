@@ -14,7 +14,7 @@ class OutgoingMessage {
     
     class func send(chatId: String, text: String?, photo: UIImage?, video: Video?, audio: String?, audioDuration: Float = 0.0, location: String?, memberIds: [String]) {
         
-        let currentUser = User.currentUser!
+        if let currentUser = User.currentUserXMPP {
         
         let message = LocalMessage()
         message.id = UUID().uuidString
@@ -49,6 +49,7 @@ class OutgoingMessage {
         PushNotificationService.shared.sendPushNotificationTo(userIds: removeCurrentUserFrom(userIds: memberIds), body: message.message, chatRoomId: chatId)
         
         XMPPRecentListener.shared.updateRecents(chatRoomId: chatId, lastMessage: message.message)
+        }
     }
     
     

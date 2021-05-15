@@ -10,6 +10,8 @@ import Firebase
 import FirebaseFirestoreSwift
 import XMPPFramework
 import RxSwift
+import KissXML
+
 
 @objc protocol XMPPMessageSubscribeListener: AnyObject {
     
@@ -121,6 +123,7 @@ class XMPPMessageListener {
                                 print("Got video body ->\(body)")
                                 
                             default:
+                                message.type = kTEXT
                                 message.message = body
                             }
                         }
@@ -246,15 +249,33 @@ class XMPPMessageListener {
     }
     
     //MARK: - Add, Update, Delete
+
+    func sendMessageXMPP(_ message: LocalMessage) {
+        
+        let messageStr = message.message
+        let receiverJID = XMPPJID(string: message.chatRoomId)
+        let msg = XMPPMessage(type: "groupchat", to: receiverJID)
+        msg.addBody(messageStr)
+        let msgAttr = DDXMLElement.init(name: "msgattr")
+        msgAttr.addAttribute(withName: "type", stringValue: "text")
+        msg.addChild(msgAttr)
+        XMPPManager.shared.sendMessage(msg)
+        
+        
+        
+    }
+    
     
     func addMessage(_ message: LocalMessage, memberId: String) {
+        // actual sending
         
-        do {
-            let _ = try FirebaseReference(.Messages).document(memberId).collection(message.chatRoomId).document(message.id).setData(from: message)
-        }
-        catch {
-            print("error saving message ", error.localizedDescription)
-        }
+        sendMessageXMPP(message)
+//        do {
+//            let _ = try FirebaseReference(.Messages).document(memberId).collection(message.chatRoomId).document(message.id).setData(from: message)
+//        }
+//        catch {
+//            print("error saving message ", error.localizedDescription)
+//        }
     }
     
     func addChannelMessage(_ message: LocalMessage, channel: Channel) {
