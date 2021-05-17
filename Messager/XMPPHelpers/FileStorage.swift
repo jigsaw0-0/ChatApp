@@ -8,12 +8,81 @@
 import Foundation
 import FirebaseStorage
 import ProgressHUD
+import Alamofire
+
 
 let storage = Storage.storage()
 
 class FileStorage {
     
     //MARK: - Images
+    
+    
+    
+//    class func uploadImageAlamofire(_ image: UIImage, directory: String, completion: @escaping (_ documentLink: String?) -> Void) {
+//
+//        
+//        let headers: HTTPHeaders
+//        headers = ["Content-type": "multipart/form-data",
+//                   "Content-Disposition" : "form-data"]
+//        
+//        AF.upload(multipartFormData: { (multipartFormData) in
+//            
+//            for (key, value) in param {
+//                multipartFormData.append(( "\(value)").data(using: String.Encoding.utf8)!, withName: key)
+//            }
+//            if arrImage.count > 0
+//            {
+//                for i in 0...arrImage.count-1
+//                {
+//                    multipartFormData.append(arrImage[i], withName: "morephoto[\(i)]", fileName: "image\(i)" + ".jpeg", mimeType: "image/jpeg")
+//                }
+//
+//            }
+//            
+//            
+//        },to: URL.init(string: URlName)!, usingThreshold: UInt64.init(),
+//          method: .post,
+//          headers: headers).response{ response in
+//            
+//            if((response.error == nil)){
+//                do{
+//                    if let jsonData = response.data{
+//                        let parsedData = try JSONSerialization.jsonObject(with: jsonData) as! Dictionary<String, AnyObject>
+//                        print(parsedData)
+//                        
+////                        let status = parsedData[Message.Status] as? NSInteger ?? 0
+////
+////                        if (status == 1){
+////                            if let jsonArray = parsedData["data"] as? [[String: Any]] {
+////                                withblock(jsonArray as AnyObject)
+////                            }
+////
+////                        }else if (status == 2){
+////                            print("error message")
+////                        }else{
+////                            print("error message")
+////                        }
+//                    }
+//                }catch{
+//                    print("error message")
+//                }
+//            }else{
+//                 print(response.error!.localizedDescription)
+//            }
+//        }
+//        
+//        
+//        
+//        
+//        
+//        
+//    }
+    
+    
+    
+    
+    
     class func uploadImage(_ image: UIImage, directory: String, completion: @escaping (_ documentLink: String?) -> Void) {
         
         let storageRef = storage.reference(forURL: kFILEREFERENCE).child(directory)

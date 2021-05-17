@@ -241,7 +241,25 @@ extension XMPPManager: XMPPMessageCarbonsDelegate {
  
     
 }
+extension XMPPManager: XMPPRoomDelegate {
+    
+    func xmppRoomDidJoin(_ sender: XMPPRoom) {
+        print("XMPPRoomDelegate - Joined")
+    }
+    
+    func xmppRoomDidLeave(_ sender: XMPPRoom) {
+        print("XMPPRoomDelegate - Left")
 
+    }
+    
+    func xmppRoomDidCreate(_ sender: XMPPRoom) {
+        print("XMPPRoomDelegate - Created")
+
+    }
+    
+    
+    
+}
 
 
 extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate {
@@ -318,81 +336,107 @@ extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate 
         
         let currentUser = User.init(self.userId, username: "Sriram", email: "", pushId: "", avatarLink: "", status: "")
         saveUserLocallyXMPP(currentUser)
-
-        delay(4) {
-            if self.current_to != nil {
-                /*
-                 <presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>
-
-
-                 <presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/2468635232971252263191746" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>
-
-
-                 <presence xmlns="jabber:client"/>
-
-
-                 <presence to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>
-
-
-                 <iq id="b63e6531-8818-4534-b6f0-408ee94e6b90:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><vCard xmlns="vcard-temp"/></iq>
-
-                 <iq id="1a3b72fb-5669-4500-a22f-0f62926d14f7:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><query xmlns="jabber:iq:last"/></iq>
-                 
-                 **/
-                
-                self.sendPresenceWithStr(#"<presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
-                
-                
-                
-                self.sendPresenceWithStr(#"<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/2468635232971252263191746" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>"#)
-                
-                self.sendPresenceWithStr(#"<presence xmlns="jabber:client"/>"#)
-                
-                self.sendPresenceWithStr(#"<presence to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
-                
-                
-                self.sendIQWithStr(#"<iq id="b63e6531-8818-4534-b6f0-408ee94e6b90:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><vCard xmlns="vcard-temp"/></iq>    "#)
-                
-                
-                
-                self.sendIQWithStr(#"<iq id="1a3b72fb-5669-4500-a22f-0f62926d14f7:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><query xmlns="jabber:iq:last"/></iq>"#)
-                
-//                let pres = XMPPPresence.init(type: "subscribe", to: self.current_to!)
-//
-//           //  let from = XMPPJID.init(string: self.userId)
-//                pres.addAttribute(withName: "from", stringValue: self.userId)
-//                pres.addAttribute(withName: "xmlns", stringValue: "jabber:client")
+        XMPPMessageListener.shared.listenForSingleMessages()
+        
+                        let rJID = XMPPJID.init(string: "347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com")
+                        let roomStorage : XMPPRoomMemoryStorage = XMPPRoomMemoryStorage.init()
+                        let xmppRoom = XMPPRoom.init(roomStorage: roomStorage, jid: rJID!, dispatchQueue: DispatchQueue.main)
+                        xmppRoom.activate(self.xmppStream)
+                        xmppRoom.addDelegate(self, delegateQueue: DispatchQueue.main)
+        
+                        xmppRoom.join(usingNickname: "\(self.xmppStream.myJID?.user ?? "")", history: nil, password: nil)
+        
+        
+        
+//        delay(4) {
+//            if self.current_to != nil {
+//                /*
+//                 <presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>
 //
 //
+//                 <presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/2468635232971252263191746" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>
 //
-//               // pres.from =
-//            //pres.elementID = "123123123"
-//            sender.send(pres)
-                
-                
-//                let pres3 = try? XMPPPresence.init(xmlString: #"<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>"#)
 //
-//                sender.send(pres3!)
+//                 <presence xmlns="jabber:client"/>
+//
+//
+//                 <presence to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>
+//
+//
+//                 <iq id="b63e6531-8818-4534-b6f0-408ee94e6b90:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><vCard xmlns="vcard-temp"/></iq>
+//
+//                 <iq id="1a3b72fb-5669-4500-a22f-0f62926d14f7:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><query xmlns="jabber:iq:last"/></iq>
+//
+//                 **/
+//
+//
+//                print("My JID is \(self.xmppStream.myJID?.user ?? "")")
+//
+//                let rJID = XMPPJID.init(string: "347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com")
+//                let roomStorage : XMPPRoomMemoryStorage = XMPPRoomMemoryStorage.init()
+//                let xmppRoom = XMPPRoom.init(roomStorage: roomStorage, jid: rJID!, dispatchQueue: DispatchQueue.main)
+//                xmppRoom.activate(self.xmppStream)
+//                xmppRoom.addDelegate(self, delegateQueue: DispatchQueue.main)
+//
+//                xmppRoom.join(usingNickname: "\(self.xmppStream.myJID?.user ?? "")", history: nil, password: nil)
+//
+//                self.sendPresenceWithStr(#"<presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
 //
 //
 //
+//                self.sendPresenceWithStr(#"<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/2468635232971252263191746" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>"#)
 //
-//                let pres2 = try? XMPPPresence.init(xmlString: #"<presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
+//                self.sendPresenceWithStr(#"<presence xmlns="jabber:client"/>"#)
 //
-//                sender.send(pres2!)
-                
-                
-                //<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/16721256987988063575185538" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>
-                
-                
-                
-                
-                
-           // print("Sent Req1 -> \(pres)")
-            print("req1")
-            }
-
-        }
+//                self.sendPresenceWithStr(#"<presence to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
+//
+//
+//                self.sendIQWithStr(#"<iq id="b63e6531-8818-4534-b6f0-408ee94e6b90:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><vCard xmlns="vcard-temp"/></iq>    "#)
+//
+//
+//
+//                self.sendIQWithStr(#"<iq id="1a3b72fb-5669-4500-a22f-0f62926d14f7:sendIQ" to="724a57784d633963624f646b704a36653676444d556e4647683263486551764d7839773838707357536b382f31376350687452633479536e5271593d@chatbeta.justdial.com" type="get" xmlns="jabber:client"><query xmlns="jabber:iq:last"/></iq>"#)
+//
+//
+//
+//
+//
+////                let pres = XMPPPresence.init(type: "subscribe", to: self.current_to!)
+////
+////           //  let from = XMPPJID.init(string: self.userId)
+////                pres.addAttribute(withName: "from", stringValue: self.userId)
+////                pres.addAttribute(withName: "xmlns", stringValue: "jabber:client")
+////
+////
+////
+////               // pres.from =
+////            //pres.elementID = "123123123"
+////            sender.send(pres)
+//
+//
+////                let pres3 = try? XMPPPresence.init(xmlString: #"<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>"#)
+////
+////                sender.send(pres3!)
+////
+////
+////
+////
+////                let pres2 = try? XMPPPresence.init(xmlString: #"<presence to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com" type="subscribe" xmlns="jabber:client"/>"#)
+////
+////                sender.send(pres2!)
+//
+//
+//                //<presence from="723557784d383951622b566d715a4b61@chatbeta.justdial.com/16721256987988063575185538" to="347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com/723557784d383951622b566d715a4b61" xmlns="jabber:client"><x xmlns="http://jabber.org/protocol/muc"/></presence>
+//
+//
+//
+//
+//
+//           // print("Sent Req1 -> \(pres)")
+//            print("req1")
+//            }
+//
+//        }
         //723557784d383951622b566d715a4b61@chatbeta.justdial.com
       //  let msg = XMPPMessage.init(type: "randomType", to: XMPPJID.init(string: "723557784d383951622b566d715a4b61@chatbeta.justdial.com/85769535323755872521392258"))
         
@@ -495,6 +539,8 @@ extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate 
 
 extension XMPPManager: XMPPRosterDelegate {
     
+    
+    
     func xmppRosterDidEndPopulating(_ sender: XMPPRoster) {
         
         
@@ -525,6 +571,10 @@ extension XMPPManager: XMPPRosterDelegate {
     
     
 }
+
+
+
+
 
 
 extension XMPPManager {

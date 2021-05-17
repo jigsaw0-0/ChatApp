@@ -30,7 +30,8 @@ class XMPPMessageListener {
     let disposeBag = DisposeBag()
     
     let subject = PublishSubject<LocalMessage>()
-
+    var subscription : Disposable?
+    let disposeBagSubscription = DisposeBag()
     
     private init() { }
     private var listeners: [XMPPMessageSubscribeListener] = []
@@ -73,6 +74,23 @@ class XMPPMessageListener {
         
     }
     
+    func listenForSingleMessages(){
+        
+        subscription = self.subject.filter{ $0.queryId == "" }.subscribe { (event) in
+            
+            if let element = event.element {
+                RealmManager.shared.saveToRealm(element)
+            }
+
+            
+            
+        }
+        
+        self.subscription?.disposed(by: self.disposeBagSubscription)
+
+        
+    }
+    
     
     
     func convertXMPPMessageToLocalMessage(_ xmppMessage : XMPPMessage) -> (LocalMessage?, String ){
@@ -95,7 +113,13 @@ class XMPPMessageListener {
                 }
                 message.senderId = forwardedMessage.fromStr ?? ""
                 message.senderName = "Dummy"
-                message.chatRoomId = chatRoomIdFrom(user1Id: xmppMessage.fromStr ?? "", user2Id: xmppMessage.toStr ?? "")
+                
+                var someStr = xmppMessage.fromStr ?? ""
+                if let slashRange = someStr.range(of: "/") {
+                    someStr.removeSubrange(slashRange.lowerBound..<someStr.endIndex)
+                }
+
+                message.chatRoomId = chatRoomIdFrom(user1Id: someStr ?? "", user2Id: xmppMessage.toStr ?? "")
                 if let localDate = mamResult.forwardedStanzaDelayedDeliveryDate {
                     message.date = localDate
                  //   print("\n(localDate ->\(localDate)")
@@ -132,7 +156,66 @@ class XMPPMessageListener {
                 }
                 return (message, queryId)
             }
-        }
+        }else if xmppMessage.isMessageWithBody {
+           
+            
+            // print("\nForwarded message body -> \(forwardedMessage.body ?? "No message!")")
+            let forwardedMessage = xmppMessage
+             message.queryId = ""
+             if let elementIdForMessage = forwardedMessage.elementID {
+              //   print("Message Element ID - \(elementIdForMessage)")
+                 
+             }
+             let stanzaIds = forwardedMessage.stanzaIds
+             //print("Message Stanza ID - \(stanzaIds)")
+             if stanzaIds.count > 0 {
+                 message.id = stanzaIds.first?.value ?? ""
+             }
+             message.senderId = forwardedMessage.fromStr ?? ""
+             message.senderName = "Dummy"
+            
+            var someStr = xmppMessage.fromStr ?? ""
+            if let slashRange = someStr.range(of: "/") {
+                someStr.removeSubrange(slashRange.lowerBound..<someStr.endIndex)
+            }
+            
+             message.chatRoomId = chatRoomIdFrom(user1Id: someStr ?? "", user2Id: xmppMessage.toStr ?? "")
+//             if let localDate = mamResult.forwardedStanzaDelayedDeliveryDate {
+//                 message.date = localDate
+//              //   print("\n(localDate ->\(localDate)")
+//             }
+            message.date = Date()
+             let msgAttrArr = forwardedMessage.elements(forName: "msgattr")
+             if msgAttrArr.count > 0 {
+                 if let type = msgAttrArr[0].attributeStringValue(forName: "type") {
+                     
+                     if let body = forwardedMessage.body {
+                       //  print("\nType ->\(type) , body -> \(body)")
+                         switch type {
+                         case "text":
+                             message.type = kTEXT
+                             message.message = body
+                         case "image":
+                             message.type = kPHOTO
+                             message.pictureUrl = body
+                         case "audio":
+                             message.type = kAUDIO
+                             message.audioUrl = body
+                         case "video":
+                             message.type = kVIDEO
+                             message.videoUrl = body
+                             print("Got video body ->\(body)")
+                             
+                         default:
+                             message.type = kTEXT
+                             message.message = body
+                         }
+                     }
+                     
+                 }
+             }
+             return (message, "")
+         }
         
         
         
@@ -301,7 +384,7 @@ class XMPPMessageListener {
     
     
     func removeListeners() {
-        self.newChatListener.remove()
+       // self.newChatListener.remove()
         
         if self.updatedChatListener != nil {
             self.updatedChatListener.remove()

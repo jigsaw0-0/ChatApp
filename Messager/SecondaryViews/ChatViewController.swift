@@ -98,7 +98,7 @@ class ChatViewController: MessagesViewController {
         configureMessageInputBar()
 
         loadChats()
-        listenForNewChats()
+       // listenForNewChats()
        // listenForReadStatusChange()
     }
     
@@ -321,7 +321,7 @@ class ChatViewController: MessagesViewController {
         
         if localMessage.senderId != User.currentId && localMessage.status != kREAD {
 
-            XMPPMessageListener.shared.updateMessageInFireStore(localMessage, memberIds: [User.currentId, recipientId])
+           // XMPPMessageListener.shared.updateMessageInFireStore(localMessage, memberIds: [User.currentId, recipientId])
         }
     }
 
