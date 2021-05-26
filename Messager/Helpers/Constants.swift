@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 let userDefaults = UserDefaults.standard
 public let kFILEREFERENCE = "gs://messanger-649e2.appspot.com"
@@ -39,3 +41,4 @@ public let kREADDATE = "date"
 
 public let kADMINID = "adminId"
 public let kMEMBERIDS = "memberIds"
+public let kREPLYVIEWHEIGHT : CGFloat = 70

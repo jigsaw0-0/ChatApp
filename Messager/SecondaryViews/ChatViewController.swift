@@ -12,7 +12,7 @@ import Gallery
 import RealmSwift
 
 class ChatViewController: MessagesViewController {
-
+    
     //MARK: - Views
     let leftBarButtonView: UIView = {
         return UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
@@ -42,7 +42,7 @@ class ChatViewController: MessagesViewController {
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     
-    let currentUser = MKSender(senderId: User.currentId, displayName: User.currentUser!.username)
+    let currentUser = MKSender(senderId: User.currentUserXMPP!.id, displayName: User.currentUserXMPP!.username)
     
     let refreshController = UIRefreshControl()
     var gallery: GalleryController!
@@ -71,15 +71,28 @@ class ChatViewController: MessagesViewController {
     init(chatId: String, recipientId: String, recipientName: String) {
         
         super.init(nibName: nil, bundle: nil)
-        
+        self.messagesCollectionView = MessagesCollectionView_Custom.init(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout_Custom())
         self.chatId = chatId
         self.recipientId = chatId
         self.recipientName = recipientName
+        
+        registerReusableCells()
+        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    private func registerReusableCells() {
+        messagesCollectionView.register(TextMessageCellCustom.self)
+        messagesCollectionView.register(MediaMessageCellCustom.self)
+        messagesCollectionView.register(LocationMessageCellCustom.self)
+        messagesCollectionView.register(AudioMessageCellCustom.self)
+        messagesCollectionView.register(LinkPreviewMessageCellCustom.self)
+        messagesCollectionView.register(ContactMessageCellCustom.self)
+        
+   }
     
     //MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -117,13 +130,13 @@ class ChatViewController: MessagesViewController {
     
     //MARK: - Configurations
     private func configureMessageCollectionView() {
-        
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.messagesLayoutDelegate = self
         
-        scrollsToBottomOnKeyboardBeginsEditing = true
+        scrollsToLastItemOnKeyboardBeginsEditing = true
         maintainPositionOnKeyboardFrameChanged = true
         
         messagesCollectionView.refreshControl = refreshController
@@ -212,7 +225,7 @@ class ChatViewController: MessagesViewController {
             case .initial:
                 self.insertMessages()
                 self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToBottom(animated: true)
+                self.messagesCollectionView.scrollToLastItem(animated: true)
 
             case .update(_, _ , let insertions, _):
 
@@ -220,7 +233,7 @@ class ChatViewController: MessagesViewController {
 
                     self.insertMessage(self.allLocalMessages[index])
                     self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToBottom(animated: false)
+                    self.messagesCollectionView.scrollToLastItem(animated: false)
                 }
 
             case .error(let error):
@@ -494,6 +507,60 @@ class ChatViewController: MessagesViewController {
 
     }
 
+    //MARK:- CollectionView properties
+    
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return messagesDataSource.typingIndicator(at: indexPath, in: messagesCollectionView)
+        }
+
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.kind {
+        case .text, .attributedText, .emoji:
+            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            cell.messageLabel.backgroundColor = UIColor.red
+            
+            return cell
+        case .photo, .video:
+            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .audio:
+            let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .contact:
+            let cell = messagesCollectionView.dequeueReusableCell(ContactMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .linkPreview:
+            let cell = messagesCollectionView.dequeueReusableCell(LinkPreviewMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .custom:
+            return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)
+        }
+        
+        
+    }
+
 
 }
 
@@ -530,3 +597,4 @@ extension ChatViewController : GalleryControllerDelegate {
     
     
 }
+

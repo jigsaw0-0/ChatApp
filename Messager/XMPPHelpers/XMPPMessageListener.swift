@@ -112,6 +112,21 @@ class XMPPMessageListener {
                     message.id = stanzaIds.first?.value ?? ""
                 }
                 message.senderId = forwardedMessage.fromStr ?? ""
+                let xElement = forwardedMessage.elements(forName: "x")
+                if xElement.count > 0 {
+                    
+                    let xElementItems = xElement[0].elements(forName: "item")
+                    for item in xElementItems {
+                        if var senderJID = item.attributeStringValue(forName: "jid") {
+                            if let slashRange = senderJID.range(of: "/") {
+                                senderJID.removeSubrange(slashRange.lowerBound..<senderJID.endIndex)
+                            }
+                            message.senderId = senderJID
+                        }
+                        break
+                    }
+                }
+                
                 message.senderName = "Dummy"
                 
                 var someStr = xmppMessage.fromStr ?? ""
@@ -172,6 +187,20 @@ class XMPPMessageListener {
                  message.id = stanzaIds.first?.value ?? ""
              }
              message.senderId = forwardedMessage.fromStr ?? ""
+            let xElement = forwardedMessage.elements(forName: "x")
+            if xElement.count > 0 {
+                
+                let xElementItems = xElement[0].elements(forName: "item")
+                for item in xElementItems {
+                    if var senderJID = item.attributeStringValue(forName: "jid") {
+                        if let slashRange = senderJID.range(of: "/") {
+                            senderJID.removeSubrange(slashRange.lowerBound..<senderJID.endIndex)
+                        }
+                        message.senderId = senderJID
+                    }
+                    break
+                }
+            }
              message.senderName = "Dummy"
             
             var someStr = xmppMessage.fromStr ?? ""
@@ -335,12 +364,32 @@ class XMPPMessageListener {
 
     func sendMessageXMPP(_ message: LocalMessage) {
         
-        let messageStr = message.message
+        var messageBody = message.message
         let receiverJID = XMPPJID(string: message.chatRoomId)
         let msg = XMPPMessage(type: "groupchat", to: receiverJID)
-        msg.addBody(messageStr)
+        //msg.addActiveChatState()
         let msgAttr = DDXMLElement.init(name: "msgattr")
-        msgAttr.addAttribute(withName: "type", stringValue: "text")
+        var msgAttrStr = "text"
+        switch message.type {
+        case "image","photo":
+            msgAttrStr = "image"
+            messageBody = message.pictureUrl
+        case "video":
+            msgAttrStr = "video"
+            messageBody = message.videoUrl
+
+        case "document","pdf":
+            msgAttrStr = "document"
+            messageBody = message.pictureUrl
+        case "audio":
+            msgAttrStr = "audio"
+            messageBody = message.audioUrl
+        default:
+            msgAttrStr = "text"
+            
+        }
+        msg.addBody(messageBody)
+        msgAttr.addAttribute(withName: "type", stringValue: msgAttrStr)
         msg.addChild(msgAttr)
         XMPPManager.shared.sendMessage(msg)
         

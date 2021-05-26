@@ -11,73 +11,87 @@ import ProgressHUD
 import Alamofire
 
 
+struct ImageHeaderData{
+    static var PNG: [UInt8] = [0x89]
+    static var JPEG: [UInt8] = [0xFF]
+    static var GIF: [UInt8] = [0x47]
+    static var TIFF_01: [UInt8] = [0x49]
+    static var TIFF_02: [UInt8] = [0x4D]
+}
+
+enum ImageFormat{
+    case Unknown, PNG, JPEG, GIF, TIFF
+}
+
+
+
 let storage = Storage.storage()
 
 class FileStorage {
     
     //MARK: - Images
     
-    
-    
-//    class func uploadImageAlamofire(_ image: UIImage, directory: String, completion: @escaping (_ documentLink: String?) -> Void) {
-//
-//        
-//        let headers: HTTPHeaders
-//        headers = ["Content-type": "multipart/form-data",
-//                   "Content-Disposition" : "form-data"]
-//        
-//        AF.upload(multipartFormData: { (multipartFormData) in
-//            
-//            for (key, value) in param {
-//                multipartFormData.append(( "\(value)").data(using: String.Encoding.utf8)!, withName: key)
-//            }
-//            if arrImage.count > 0
-//            {
-//                for i in 0...arrImage.count-1
-//                {
-//                    multipartFormData.append(arrImage[i], withName: "morephoto[\(i)]", fileName: "image\(i)" + ".jpeg", mimeType: "image/jpeg")
-//                }
-//
-//            }
-//            
-//            
-//        },to: URL.init(string: URlName)!, usingThreshold: UInt64.init(),
-//          method: .post,
-//          headers: headers).response{ response in
-//            
-//            if((response.error == nil)){
-//                do{
-//                    if let jsonData = response.data{
-//                        let parsedData = try JSONSerialization.jsonObject(with: jsonData) as! Dictionary<String, AnyObject>
-//                        print(parsedData)
-//                        
-////                        let status = parsedData[Message.Status] as? NSInteger ?? 0
-////
-////                        if (status == 1){
-////                            if let jsonArray = parsedData["data"] as? [[String: Any]] {
-////                                withblock(jsonArray as AnyObject)
-////                            }
-////
-////                        }else if (status == 2){
-////                            print("error message")
-////                        }else{
-////                            print("error message")
-////                        }
-//                    }
-//                }catch{
-//                    print("error message")
-//                }
-//            }else{
-//                 print(response.error!.localizedDescription)
-//            }
-//        }
-//        
-//        
-//        
-//        
-//        
-//        
-//    }
+    class func uploadImageAlamofire(_ image: UIImage, directory: String, completion: @escaping (_ documentLink: String?) -> Void) {
+        let parameters = ["Content-type": "form-data",
+                          "Content-Disposition" : "image/jpeg",
+                          "sid":"cXesobua2iDfig+/MgcOokNTAZSuKxE5ByDyQIZn3r4="]
+        AF.upload(multipartFormData: { (multipartFormData) in
+            
+            //https://beta3.justdial.com/uttam/jdchatmuc/index.html?sid=G89M71NVIuIaLrYCm6d0N2nj423JxFQ0%2FT%2BUGvWSOL8%3D&docid=080PXX80.XX80.200625174808.I3W5&ctype=con&prefid=DRK2G2Z7
+            let imageData = image.jpegData(compressionQuality: 0.6)
+            print("\nKing of image ->\((imageData! as NSData).imageFormat)")
+            let someStr = UUID().uuidString
+            multipartFormData.append(imageData!, withName: "file", fileName: someStr + ".jpeg", mimeType: "multipart/form-data")
+            
+            
+            for (key, value) in parameters {
+                multipartFormData.append(value.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!, withName: key)
+            }
+            
+        }, to: "https://beta3.justdial.com/uttam/jdchat/upload.php?sid=cXesobua2iDfig+/MgcOokNTAZSuKxE5ByDyQIZn3r4=").uploadProgress { progress in
+            
+            
+            let progress = progress.completedUnitCount / progress.totalUnitCount
+            ProgressHUD.showProgress(CGFloat(progress))
+            
+            //uploadProgressValues.append(progress.fractionCompleted)
+        }
+        .downloadProgress { progress in
+            
+            //    downloadProgressValues.append(progress.fractionCompleted)
+        }
+        .response { response in
+            
+            print("Upload Complete !!!!")
+            ProgressHUD.dismiss()
+            if((response.error == nil)){
+                do{
+                    if let jsonData = response.data{
+                        if let parsedData = try JSONSerialization.jsonObject(with: jsonData) as? NSDictionary {
+                            print(parsedData)
+                            if let arr = parsedData.object(forKey: "image_urls") as? Array<String>, arr.count > 0 {
+                                completion(arr[0])
+                            }
+                            
+                        }
+                        
+                        
+                    }else{
+                        print("\nResponse data is nil")
+                        
+                    }
+                }catch{
+                    print("error message")
+                }
+            }else{
+                print(response.error!.localizedDescription)
+            }
+            
+            
+        }
+        
+        
+    }
     
     
     
@@ -172,6 +186,72 @@ class FileStorage {
     }
     
     //MARK: - Video
+    
+    
+    //video/mp4
+    
+    class func uploadVideoAlamofire(_ video: NSData, directory: String, completion: @escaping (_ videoLink: String?) -> Void) {
+        let parameters = ["Content-type": "form-data",
+                          "Content-Disposition" : "video/mov",
+                          "sid":"cXesobua2iDfig+/MgcOokNTAZSuKxE5ByDyQIZn3r4="]
+        AF.upload(multipartFormData: { (multipartFormData) in
+            
+            //https://beta3.justdial.com/uttam/jdchatmuc/index.html?sid=G89M71NVIuIaLrYCm6d0N2nj423JxFQ0%2FT%2BUGvWSOL8%3D&docid=080PXX80.XX80.200625174808.I3W5&ctype=con&prefid=DRK2G2Z7
+            let videoData = video
+            let someStr = UUID().uuidString
+            multipartFormData.append(videoData as Data, withName: "file", fileName: someStr + ".mp4", mimeType: "multipart/form-data")
+            
+            
+            for (key, value) in parameters {
+                multipartFormData.append(value.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!, withName: key)
+            }
+            
+        }, to: "https://beta3.justdial.com/uttam/jdchat/upload.php?sid=cXesobua2iDfig+/MgcOokNTAZSuKxE5ByDyQIZn3r4=").uploadProgress { progress in
+            
+            
+            let progress = progress.completedUnitCount / progress.totalUnitCount
+            ProgressHUD.showProgress(CGFloat(progress))
+            
+            //uploadProgressValues.append(progress.fractionCompleted)
+        }
+        .downloadProgress { progress in
+            
+            //    downloadProgressValues.append(progress.fractionCompleted)
+        }
+        .response { response in
+            
+            print("Upload Complete Video!!!!")
+            
+            ProgressHUD.dismiss()
+            if((response.error == nil)){
+                do{
+                    if let jsonData = response.data{
+                        if let parsedData = try JSONSerialization.jsonObject(with: jsonData) as? NSDictionary {
+                            print(parsedData)
+                            if let arr = parsedData.object(forKey: "image_urls") as? Array<String>, arr.count > 0 {
+                                completion(arr[0])
+                            }
+                            
+                        }
+                        
+                        
+                    }else{
+                        print("\nResponse data is nil")
+                        
+                    }
+                }catch{
+                    print("error message")
+                }
+            }else{
+                print(response.error!.localizedDescription)
+            }
+            
+            
+        }
+        
+        
+    }
+    
     class func uploadVideo(_ video: NSData, directory: String, completion: @escaping (_ videoLink: String?) -> Void) {
         
         let storageRef = storage.reference(forURL: kFILEREFERENCE).child(directory)
@@ -329,7 +409,26 @@ class FileStorage {
     
 }
 
-
+extension NSData{
+    var imageFormat: ImageFormat{
+        var buffer = [UInt8](repeating: 0, count: 1)
+        self.getBytes(&buffer, range: NSRange(location: 0,length: 1))
+        if buffer == ImageHeaderData.PNG
+        {
+            return .PNG
+        } else if buffer == ImageHeaderData.JPEG
+        {
+            return .JPEG
+        } else if buffer == ImageHeaderData.GIF
+        {
+            return .GIF
+        } else if buffer == ImageHeaderData.TIFF_01 || buffer == ImageHeaderData.TIFF_02{
+            return .TIFF
+        } else{
+            return .Unknown
+        }
+    }
+}
 
 //Helpers
 func fileInDocumentsDirectory(fileName: String) -> String {

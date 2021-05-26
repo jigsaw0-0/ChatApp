@@ -138,7 +138,20 @@ func sendPictureMessage(message: LocalMessage, photo: UIImage, memberIds: [Strin
     
     FileStorage.saveFileLocally(fileData: photo.jpegData(compressionQuality: 0.6)! as NSData, fileName: fileName)
     
-    FileStorage.uploadImage(photo, directory: fileDirectory) { (imageURL) in
+//    FileStorage.uploadImage(photo, directory: fileDirectory) { (imageURL) in
+//
+//        if imageURL != nil {
+//
+//            message.pictureUrl = imageURL!
+//
+//            if channel != nil {
+//                OutgoingMessage.sendChannelMessage(message: message, channel: channel!)
+//            } else {
+//                OutgoingMessage.sendMessage(message: message, memberIds: memberIds)
+//            }
+//        }
+//    }
+    FileStorage.uploadImageAlamofire(photo, directory: fileDirectory) { (imageURL) in
         
         if imageURL != nil {
             
@@ -151,6 +164,9 @@ func sendPictureMessage(message: LocalMessage, photo: UIImage, memberIds: [Strin
             }
         }
     }
+    
+    
+    
 }
 
 func sendVideoMessage(message: LocalMessage, video: Video, memberIds: [String], channel: Channel? = nil) {
@@ -172,7 +188,7 @@ func sendVideoMessage(message: LocalMessage, video: Video, memberIds: [String], 
             
             FileStorage.saveFileLocally(fileData: thubnail.jpegData(compressionQuality: 0.7)! as NSData, fileName: fileName)
             
-            FileStorage.uploadImage(thubnail, directory: thumbnailDirectory) { (imageLink) in
+            FileStorage.uploadImageAlamofire(thubnail, directory: thumbnailDirectory) { (imageLink) in
                 
                 if imageLink != nil {
                     
@@ -180,7 +196,7 @@ func sendVideoMessage(message: LocalMessage, video: Video, memberIds: [String], 
                     
                     FileStorage.saveFileLocally(fileData: videoData!, fileName: fileName + ".mov")
                     
-                    FileStorage.uploadVideo(videoData!, directory: videoDirectory) { (videoLink) in
+                    FileStorage.uploadVideoAlamofire(videoData!, directory: videoDirectory) { (videoLink) in
                         
                         message.pictureUrl = imageLink ?? ""
                         message.videoUrl = videoLink ?? ""

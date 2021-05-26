@@ -23,6 +23,11 @@ class LocalMessage: Object, Codable {
     @objc dynamic var audioDuration = 0.0
     @objc dynamic var queryId = ""
     
+    @objc dynamic var previousBody = ""
+    @objc dynamic var previousMsgId = ""
+    @objc dynamic var previousMsgType = ""
+    @objc dynamic var reply = false
+
     override class func primaryKey() -> String? {
         return "id"
     }
