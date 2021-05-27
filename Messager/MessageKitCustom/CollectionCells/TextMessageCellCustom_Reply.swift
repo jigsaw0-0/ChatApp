@@ -8,6 +8,8 @@
 import UIKit
 import Foundation
 import MessageKit
+import SDWebImage
+
 
 open class TextMessageCellCustom_Reply : TextMessageCellCustom {
     
@@ -28,16 +30,23 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
     func configureReply(with message: MKMessage, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView)  {
         if message.reply {
             replySenderName.text = "Dummy Name"
-           // replySenderName.backgroundColor = UIColor.red
+            // replySenderName.backgroundColor = UIColor.red
             print("Configuring Reply texy")
             replySenderName.textColor = UIColor.replyBubbleColors()[2]
             replySenderName.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
             leftColorView.backgroundColor = UIColor.replyBubbleColors()[2]
-            replyLabel.text = message.previousBody
             
+            if message.previousMsgType == "image" || message.previousMsgType == "video" {
+                replyLabel.text = message.previousMsgType == "image" ? "Photo" : "Video"
+                if let imgURL = URL.init(string: message.previousBody) {
+                    replyRightImageView.sd_setImage(with: imgURL, placeholderImage: nil, options: .progressiveLoad, completed: nil)
+                }
+            }else{
+                replyRightImageView.image = nil
+                replyLabel.text = message.previousBody
+            }
             
         }
-        
     }
     
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -54,6 +63,8 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
             replySenderName.addConstraints(replyView.topAnchor, left: leftColorView.rightAnchor, bottom: nil, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 80, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: 30)
             
             replyLabel.addConstraints(replySenderName.bottomAnchor, left: leftColorView.rightAnchor, bottom: nil, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 80, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: 30)
+            
+            replyRightImageView.addConstraints(replyView.topAnchor, left: nil, bottom: replyView.bottomAnchor, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 70, heightConstant: 0)
             
             
         }
@@ -72,19 +83,66 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
         replyView.backgroundColor = UIColor.MKOutgoingBubbleReply
         replyView.layer.cornerRadius = 5
         replyView.layer.masksToBounds = true
-        
-        
-        
 
-        setupReplyConstraints()
     }
     
-    open func setupReplyConstraints(){
+    open override func layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes) {
+        super.layoutMessageContainerView(with: attributes)
+        var frame = messageContainerView.frame
         
-       
+        switch attributes.avatarPosition.horizontal {
+        case .cellLeading:
+            frame.origin.x = 0
+        case .cellTrailing:
+            frame.origin.x = attributes.frame.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right
+        case .natural:
+            fatalError(MessageKitError.avatarPositionUnresolved)
+        }
+
         
-        
-        
+        messageContainerView.frame = frame
+
         
     }
+    
+    
+    
+    
+    open override func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
+       // var origin: CGPoint = .zero
+//        let padding = attributes.avatarLeadingTrailingPadding
+//
+//        switch attributes.avatarPosition.horizontal {
+//        case .cellLeading:
+//            origin.x = padding
+//        case .cellTrailing:
+//            origin.x = attributes.frame.width - attributes.avatarSize.width - padding
+//        case .natural:
+//            fatalError(MessageKitError.avatarPositionUnresolved)
+//        }
+//
+//        switch attributes.avatarPosition.vertical {
+//        case .messageLabelTop:
+//            origin.y = messageTopLabel.frame.minY
+//        case .messageTop: // Needs messageContainerView frame to be set
+//            origin.y = messageContainerView.frame.minY
+//        case .messageBottom: // Needs messageContainerView frame to be set
+//            origin.y = messageContainerView.frame.maxY - attributes.avatarSize.height
+//        case .messageCenter: // Needs messageContainerView frame to be set
+//            origin.y = messageContainerView.frame.midY - (attributes.avatarSize.height/2)
+//        case .cellBottom:
+//            origin.y = attributes.frame.height - attributes.avatarSize.height
+//        default:
+//            break
+//        }
+
+        avatarView.frame = CGRect(origin: .zero, size: .zero)
+    }
+
+    
+    
+    
+    
+    
+    
 }

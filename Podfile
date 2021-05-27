@@ -20,7 +20,7 @@ pod 'Gallery'
 
 #pod 'ProgressHUD'
 pod 'SKPhotoBrowser'
-
+pod 'SDWebImage'
 #pod 'MessageKit'
 #pod 'InputBarAccessoryView'
 

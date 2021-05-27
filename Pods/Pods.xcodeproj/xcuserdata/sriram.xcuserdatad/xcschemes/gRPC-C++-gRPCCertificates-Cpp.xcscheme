@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1CBE77D233B7CF482B702EE923876860"
+               BlueprintIdentifier = "EAA9BDEEA0258C4CC261A96770F56ACC"
                BuildableName = "gRPCCertificates-Cpp.bundle"
                BlueprintName = "gRPC-C++-gRPCCertificates-Cpp"
                ReferencedContainer = "container:Pods.xcodeproj">

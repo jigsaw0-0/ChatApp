@@ -66,19 +66,19 @@
 		55FA0EAB250FF93700FF6BB0 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA0EAA250FF93700FF6BB0 /* BasicAudioController.swift */; };
 		55FBE25624F6EA9100ECE961 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBE25524F6EA9100ECE961 /* ChatViewController.swift */; };
 		802100E82604FCF3004C6429 /* XMPPMamWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802100E72604FCF3004C6429 /* XMPPMamWorker.swift */; };
-		804558FB25F6D7EA00CEFE7D /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FA25F6D7EA00CEFE7D /* MBProgressHUD */; };
-		804558FF25F6D82800CEFE7D /* InputBarAccessoryView in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FE25F6D82800CEFE7D /* InputBarAccessoryView */; };
-		8045590325F6D85500CEFE7D /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590225F6D85500CEFE7D /* MessageKit */; };
-		8045590725F6D8E100CEFE7D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590625F6D8E100CEFE7D /* Realm */; };
-		8045590925F6D8E100CEFE7D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590825F6D8E100CEFE7D /* RealmSwift */; };
-		806027BC25F7B32100B04202 /* XMPPFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 806027BB25F7B32100B04202 /* XMPPFramework */; };
-		806027BE25F7B32100B04202 /* XMPPFrameworkSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 806027BD25F7B32100B04202 /* XMPPFrameworkSwift */; };
+		804558FB25F6D7EA00CEFE7D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FA25F6D7EA00CEFE7D /* SwiftPackageProductDependency */; };
+		804558FF25F6D82800CEFE7D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FE25F6D82800CEFE7D /* SwiftPackageProductDependency */; };
+		8045590325F6D85500CEFE7D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590225F6D85500CEFE7D /* SwiftPackageProductDependency */; };
+		8045590725F6D8E100CEFE7D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590625F6D8E100CEFE7D /* SwiftPackageProductDependency */; };
+		8045590925F6D8E100CEFE7D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8045590825F6D8E100CEFE7D /* SwiftPackageProductDependency */; };
+		806027BC25F7B32100B04202 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 806027BB25F7B32100B04202 /* SwiftPackageProductDependency */; };
+		806027BE25F7B32100B04202 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 806027BD25F7B32100B04202 /* SwiftPackageProductDependency */; };
 		806027C325F7B36600B04202 /* XMPPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806027C225F7B36600B04202 /* XMPPManager.swift */; };
-		806027C725F7B64000B04202 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 806027C625F7B64000B04202 /* Alamofire */; };
+		806027C725F7B64000B04202 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 806027C625F7B64000B04202 /* SwiftPackageProductDependency */; };
 		809A0176265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */; };
 		809A0179265F73BE00BE1657 /* MessageKitAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */; };
 		809A017C265F775400BE1657 /* UIKitExtenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A017B265F775400BE1657 /* UIKitExtenstions.swift */; };
-		809A969B26267A1400A92048 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 809A969A26267A1400A92048 /* RxSwift */; };
+		809A969B26267A1400A92048 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 809A969A26267A1400A92048 /* SwiftPackageProductDependency */; };
 		80AE1121262831F000AA26CF /* LocalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE1120262831F000AA26CF /* LocalUser.swift */; };
 		80B560A82658B002001212AB /* MessageKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B560A72658B002001212AB /* MessageKitError.swift */; };
 		80B560C42658B5A9001212AB /* TextMessageCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B560C32658B5A9001212AB /* TextMessageCellCustom.swift */; };
@@ -110,7 +110,7 @@
 		80D2F32625F886C90030E342 /* TClass1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2F32525F886C90030E342 /* TClass1.swift */; };
 		80D2F32925F888C40030E342 /* TestListen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2F32825F888C40030E342 /* TestListen.swift */; };
 		80D2F32C25F8A15A0030E342 /* TClass2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2F32B25F8A15A0030E342 /* TClass2.swift */; };
-		80F258A625F744E2004F3A0A /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 80F258A525F744E2004F3A0A /* ProgressHUD */; };
+		80F258A625F744E2004F3A0A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 80F258A525F744E2004F3A0A /* SwiftPackageProductDependency */; };
 		80F8D86C262DA48D008B6026 /* XMPPIQHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F8D86B262DA48D008B6026 /* XMPPIQHandler.swift */; };
 		CF8CA9343B8D187A56D25E62 /* Pods_Messager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1624ABD47DE336A318385FE /* Pods_Messager.framework */; };
 /* End PBXBuildFile section */
@@ -224,17 +224,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806027BC25F7B32100B04202 /* XMPPFramework in Frameworks */,
-				8045590925F6D8E100CEFE7D /* RealmSwift in Frameworks */,
-				80F258A625F744E2004F3A0A /* ProgressHUD in Frameworks */,
-				804558FB25F6D7EA00CEFE7D /* MBProgressHUD in Frameworks */,
-				804558FF25F6D82800CEFE7D /* InputBarAccessoryView in Frameworks */,
-				806027C725F7B64000B04202 /* Alamofire in Frameworks */,
-				8045590325F6D85500CEFE7D /* MessageKit in Frameworks */,
-				806027BE25F7B32100B04202 /* XMPPFrameworkSwift in Frameworks */,
-				8045590725F6D8E100CEFE7D /* Realm in Frameworks */,
+				806027BC25F7B32100B04202 /* BuildFile in Frameworks */,
+				8045590925F6D8E100CEFE7D /* BuildFile in Frameworks */,
+				80F258A625F744E2004F3A0A /* BuildFile in Frameworks */,
+				804558FB25F6D7EA00CEFE7D /* BuildFile in Frameworks */,
+				804558FF25F6D82800CEFE7D /* BuildFile in Frameworks */,
+				806027C725F7B64000B04202 /* BuildFile in Frameworks */,
+				8045590325F6D85500CEFE7D /* BuildFile in Frameworks */,
+				806027BE25F7B32100B04202 /* BuildFile in Frameworks */,
+				8045590725F6D8E100CEFE7D /* BuildFile in Frameworks */,
 				CF8CA9343B8D187A56D25E62 /* Pods_Messager.framework in Frameworks */,
-				809A969B26267A1400A92048 /* RxSwift in Frameworks */,
+				809A969B26267A1400A92048 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,16 +528,16 @@
 			);
 			name = Messager;
 			packageProductDependencies = (
-				804558FA25F6D7EA00CEFE7D /* MBProgressHUD */,
-				804558FE25F6D82800CEFE7D /* InputBarAccessoryView */,
-				8045590225F6D85500CEFE7D /* MessageKit */,
-				8045590625F6D8E100CEFE7D /* Realm */,
-				8045590825F6D8E100CEFE7D /* RealmSwift */,
-				80F258A525F744E2004F3A0A /* ProgressHUD */,
-				806027BB25F7B32100B04202 /* XMPPFramework */,
-				806027BD25F7B32100B04202 /* XMPPFrameworkSwift */,
-				806027C625F7B64000B04202 /* Alamofire */,
-				809A969A26267A1400A92048 /* RxSwift */,
+				804558FA25F6D7EA00CEFE7D /* SwiftPackageProductDependency */,
+				804558FE25F6D82800CEFE7D /* SwiftPackageProductDependency */,
+				8045590225F6D85500CEFE7D /* SwiftPackageProductDependency */,
+				8045590625F6D8E100CEFE7D /* SwiftPackageProductDependency */,
+				8045590825F6D8E100CEFE7D /* SwiftPackageProductDependency */,
+				80F258A525F744E2004F3A0A /* SwiftPackageProductDependency */,
+				806027BB25F7B32100B04202 /* SwiftPackageProductDependency */,
+				806027BD25F7B32100B04202 /* SwiftPackageProductDependency */,
+				806027C625F7B64000B04202 /* SwiftPackageProductDependency */,
+				809A969A26267A1400A92048 /* SwiftPackageProductDependency */,
 			);
 			productName = Messager;
 			productReference = 55404AEB24E9B63C00844839 /* Messager.app */;
@@ -567,14 +567,14 @@
 			);
 			mainGroup = 55404AE224E9B63C00844839;
 			packageReferences = (
-				804558F925F6D7EA00CEFE7D /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
-				804558FD25F6D82800CEFE7D /* XCRemoteSwiftPackageReference "InputBarAccessoryView" */,
-				8045590125F6D85500CEFE7D /* XCRemoteSwiftPackageReference "MessageKit" */,
-				8045590525F6D8E100CEFE7D /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				80F258A425F744E2004F3A0A /* XCRemoteSwiftPackageReference "ProgressHUD" */,
-				806027BA25F7B32100B04202 /* XCRemoteSwiftPackageReference "XMPPFramework" */,
-				806027C525F7B64000B04202 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				809A969926267A1300A92048 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				804558F925F6D7EA00CEFE7D /* RemoteSwiftPackageReference */,
+				804558FD25F6D82800CEFE7D /* RemoteSwiftPackageReference */,
+				8045590125F6D85500CEFE7D /* RemoteSwiftPackageReference */,
+				8045590525F6D8E100CEFE7D /* RemoteSwiftPackageReference */,
+				80F258A425F744E2004F3A0A /* RemoteSwiftPackageReference */,
+				806027BA25F7B32100B04202 /* RemoteSwiftPackageReference */,
+				806027C525F7B64000B04202 /* RemoteSwiftPackageReference */,
+				809A969926267A1300A92048 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 55404AEC24E9B63C00844839 /* Products */;
 			projectDirPath = "";
@@ -616,6 +616,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SKPhotoBrowser/SKPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -633,6 +634,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -992,7 +994,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		804558F925F6D7EA00CEFE7D /* XCRemoteSwiftPackageReference "MBProgressHUD" */ = {
+		804558F925F6D7EA00CEFE7D /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jdg/MBProgressHUD";
 			requirement = {
@@ -1000,7 +1002,7 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		804558FD25F6D82800CEFE7D /* XCRemoteSwiftPackageReference "InputBarAccessoryView" */ = {
+		804558FD25F6D82800CEFE7D /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nathantannar4/InputBarAccessoryView";
 			requirement = {
@@ -1008,7 +1010,7 @@
 				minimumVersion = 5.3.0;
 			};
 		};
-		8045590125F6D85500CEFE7D /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+		8045590125F6D85500CEFE7D /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MessageKit/MessageKit";
 			requirement = {
@@ -1016,7 +1018,7 @@
 				minimumVersion = 3.5.1;
 			};
 		};
-		8045590525F6D8E100CEFE7D /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+		8045590525F6D8E100CEFE7D /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa";
 			requirement = {
@@ -1024,7 +1026,7 @@
 				minimumVersion = 10.7.1;
 			};
 		};
-		806027BA25F7B32100B04202 /* XCRemoteSwiftPackageReference "XMPPFramework" */ = {
+		806027BA25F7B32100B04202 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/XMPPFramework";
 			requirement = {
@@ -1032,7 +1034,7 @@
 				minimumVersion = 4.1.0;
 			};
 		};
-		806027C525F7B64000B04202 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		806027C525F7B64000B04202 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
@@ -1040,7 +1042,7 @@
 				minimumVersion = 5.4.1;
 			};
 		};
-		809A969926267A1300A92048 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+		809A969926267A1300A92048 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
 			requirement = {
@@ -1048,7 +1050,7 @@
 				minimumVersion = 6.1.0;
 			};
 		};
-		80F258A425F744E2004F3A0A /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+		80F258A425F744E2004F3A0A /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
 			requirement = {
@@ -1059,54 +1061,54 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		804558FA25F6D7EA00CEFE7D /* MBProgressHUD */ = {
+		804558FA25F6D7EA00CEFE7D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 804558F925F6D7EA00CEFE7D /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
+			package = 804558F925F6D7EA00CEFE7D /* RemoteSwiftPackageReference */;
 			productName = MBProgressHUD;
 		};
-		804558FE25F6D82800CEFE7D /* InputBarAccessoryView */ = {
+		804558FE25F6D82800CEFE7D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 804558FD25F6D82800CEFE7D /* XCRemoteSwiftPackageReference "InputBarAccessoryView" */;
+			package = 804558FD25F6D82800CEFE7D /* RemoteSwiftPackageReference */;
 			productName = InputBarAccessoryView;
 		};
-		8045590225F6D85500CEFE7D /* MessageKit */ = {
+		8045590225F6D85500CEFE7D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8045590125F6D85500CEFE7D /* XCRemoteSwiftPackageReference "MessageKit" */;
+			package = 8045590125F6D85500CEFE7D /* RemoteSwiftPackageReference */;
 			productName = MessageKit;
 		};
-		8045590625F6D8E100CEFE7D /* Realm */ = {
+		8045590625F6D8E100CEFE7D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8045590525F6D8E100CEFE7D /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 8045590525F6D8E100CEFE7D /* RemoteSwiftPackageReference */;
 			productName = Realm;
 		};
-		8045590825F6D8E100CEFE7D /* RealmSwift */ = {
+		8045590825F6D8E100CEFE7D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8045590525F6D8E100CEFE7D /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 8045590525F6D8E100CEFE7D /* RemoteSwiftPackageReference */;
 			productName = RealmSwift;
 		};
-		806027BB25F7B32100B04202 /* XMPPFramework */ = {
+		806027BB25F7B32100B04202 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806027BA25F7B32100B04202 /* XCRemoteSwiftPackageReference "XMPPFramework" */;
+			package = 806027BA25F7B32100B04202 /* RemoteSwiftPackageReference */;
 			productName = XMPPFramework;
 		};
-		806027BD25F7B32100B04202 /* XMPPFrameworkSwift */ = {
+		806027BD25F7B32100B04202 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806027BA25F7B32100B04202 /* XCRemoteSwiftPackageReference "XMPPFramework" */;
+			package = 806027BA25F7B32100B04202 /* RemoteSwiftPackageReference */;
 			productName = XMPPFrameworkSwift;
 		};
-		806027C625F7B64000B04202 /* Alamofire */ = {
+		806027C625F7B64000B04202 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806027C525F7B64000B04202 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 806027C525F7B64000B04202 /* RemoteSwiftPackageReference */;
 			productName = Alamofire;
 		};
-		809A969A26267A1400A92048 /* RxSwift */ = {
+		809A969A26267A1400A92048 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 809A969926267A1300A92048 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			package = 809A969926267A1300A92048 /* RemoteSwiftPackageReference */;
 			productName = RxSwift;
 		};
-		80F258A525F744E2004F3A0A /* ProgressHUD */ = {
+		80F258A525F744E2004F3A0A /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 80F258A425F744E2004F3A0A /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			package = 80F258A425F744E2004F3A0A /* RemoteSwiftPackageReference */;
 			productName = ProgressHUD;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -15,6 +15,8 @@ open class TextMessageSizeCalculator_Custom_Reply: TextMessageSizeCalculator_Cus
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         var size = super.messageContainerSize(for: message)
         size.height = size.height + kREPLYVIEWHEIGHT
+        
+        size.width = max(size.width, 200)
         return size
         
     }
