@@ -571,7 +571,7 @@ class ChatViewController: MessagesViewController {
                 let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom_Reply.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
-                cell.messageLabel.backgroundColor = UIColor.red
+               // cell.messageLabel.backgroundColor = UIColor.red
                 return cell
             case .photo, .video:
                 let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom_Reply.self, for: indexPath)
