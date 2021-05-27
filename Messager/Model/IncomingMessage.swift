@@ -24,6 +24,16 @@ class IncomingMessage {
         
         let mkMessage = MKMessage(message: localMessage)
         
+        
+        
+        
+        if localMessage.previousBody.count > 0 && localMessage.previousMsgType.count > 0 {
+            mkMessage.reply = true
+            mkMessage.previousBody = localMessage.previousBody
+            mkMessage.previousMsgType = localMessage.previousMsgType
+            mkMessage.previousMsgId = localMessage.previousMsgId
+        }
+        
         if localMessage.type == kPHOTO {
             
             let photoItem = PhotoMessage(path: localMessage.pictureUrl)
@@ -37,6 +47,7 @@ class IncomingMessage {
                 self.messageCollectionView.messagesCollectionView.reloadData()
             }
         }
+        
         
         if localMessage.type == kVIDEO {
             

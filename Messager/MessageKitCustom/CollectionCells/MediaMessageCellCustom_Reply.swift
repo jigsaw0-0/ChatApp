@@ -12,7 +12,14 @@ import MessageKit
 open class MediaMessageCellCustom_Reply : MediaMessageCellCustom {
     
     
-    
+    func configureReply(with message: MKMessage, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView)  {
+        if message.reply {
+            
+            print("Configuring Reply media")
+            
+        }
+        
+    }
     
     
     

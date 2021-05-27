@@ -106,6 +106,24 @@ class XMPPMessageListener {
                  //   print("Message Element ID - \(elementIdForMessage)")
                     
                 }
+                let previousElements = forwardedMessage.elements(forName: "previousdata")
+                for ob in previousElements {
+                    
+                    if let body = ob.attributeStringValue(forName: "body") {
+                        message.previousBody = body
+                        print("Replied msg --> body")
+                    }
+                    if let msgid = ob.attributeStringValue(forName: "msgid") {
+                        message.previousMsgId = msgid
+                    }
+                    if let msgtype = ob.attributeStringValue(forName: "msgtype") {
+                        message.previousMsgType = msgtype
+                    }
+                    break
+                    
+                }
+                
+                
                 let stanzaIds = forwardedMessage.stanzaIds
                 //print("Message Stanza ID - \(stanzaIds)")
                 if stanzaIds.count > 0 {

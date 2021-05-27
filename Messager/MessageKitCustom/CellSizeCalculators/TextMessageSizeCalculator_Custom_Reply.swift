@@ -12,12 +12,12 @@ import MessageKit
 open class TextMessageSizeCalculator_Custom_Reply: TextMessageSizeCalculator_Custom {
     
     
-//    open override func messageContainerSize(for message: MessageType) -> CGSize {
-//        var size = super.messageContainerSize(for: message)
-//        size.height = size.height + 100
-//        return size
-//
-//    }
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
+        var size = super.messageContainerSize(for: message)
+        size.height = size.height + kREPLYVIEWHEIGHT
+        return size
+        
+    }
     
     
 }

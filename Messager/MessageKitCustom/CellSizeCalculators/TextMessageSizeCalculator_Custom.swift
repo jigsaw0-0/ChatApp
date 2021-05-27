@@ -14,10 +14,13 @@ open class TextMessageSizeCalculator_Custom: TextMessageSizeCalculator {
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         var size = super.messageContainerSize(for: message)
-        size.height = size.height + kREPLYVIEWHEIGHT
         return size
         
     }
+    
+    
+    
+    
     
     
 }

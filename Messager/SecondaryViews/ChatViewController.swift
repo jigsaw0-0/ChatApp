@@ -92,6 +92,13 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.register(LinkPreviewMessageCellCustom.self)
         messagesCollectionView.register(ContactMessageCellCustom.self)
         
+        messagesCollectionView.register(TextMessageCellCustom_Reply.self)
+        messagesCollectionView.register(MediaMessageCellCustom_Reply.self)
+        messagesCollectionView.register(LocationMessageCellCustom_Reply.self)
+        messagesCollectionView.register(AudioMessageCellCustom_Reply.self)
+        messagesCollectionView.register(LinkPreviewMessageCellCustom_Reply.self)
+        messagesCollectionView.register(ContactMessageCellCustom_Reply.self)
+        
    }
     
     //MARK: - View LifeCycle
@@ -516,48 +523,85 @@ class ChatViewController: MessagesViewController {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-
+        
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-
+        
         if isSectionReservedForTypingIndicator(indexPath.section) {
             return messagesDataSource.typingIndicator(at: indexPath, in: messagesCollectionView)
         }
-
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
-        switch message.kind {
-        case .text, .attributedText, .emoji:
-            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            cell.messageLabel.backgroundColor = UIColor.red
-            
-            return cell
-        case .photo, .video:
-            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
-        case .location:
-            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
-        case .audio:
-            let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
-        case .contact:
-            let cell = messagesCollectionView.dequeueReusableCell(ContactMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
-        case .linkPreview:
-            let cell = messagesCollectionView.dequeueReusableCell(LinkPreviewMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
-        case .custom:
-            return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)
-        }
         
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        if !(message as! MKMessage).reply {
+            
+            switch message.kind {
+            case .text, .attributedText, .emoji:
+                let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .photo, .video:
+                let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .location:
+                let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .audio:
+                let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .contact:
+                let cell = messagesCollectionView.dequeueReusableCell(ContactMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .linkPreview:
+                let cell = messagesCollectionView.dequeueReusableCell(LinkPreviewMessageCellCustom.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .custom:
+                return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)
+            }
+            
+        }else{
+            switch message.kind {
+            case .text, .attributedText, .emoji:
+                let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
+                cell.messageLabel.backgroundColor = UIColor.red
+                return cell
+            case .photo, .video:
+                let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
+
+                return cell
+            case .location:
+                let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .audio:
+                let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .contact:
+                let cell = messagesCollectionView.dequeueReusableCell(ContactMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .linkPreview:
+                let cell = messagesCollectionView.dequeueReusableCell(LinkPreviewMessageCellCustom_Reply.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            case .custom:
+                return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)
+            }
+            
+            
+            
+        }
         
     }
 
