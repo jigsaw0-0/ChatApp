@@ -110,3 +110,20 @@ internal extension UIView {
     }
 }
 
+extension UIColor {
+    
+    
+    @objc class func colorFromRGB(_ r: Int, g: Int, b: Int) -> UIColor {
+       return UIColor(red: CGFloat(Float(r) / 255), green: CGFloat(Float(g) / 255), blue: CGFloat(Float(b) / 255), alpha: 1)
+     }
+     
+     class func replyBubbleColors() -> [UIColor] {
+       let palette = [
+         UIColor.colorFromRGB(203, g: 143, b: 211),
+         UIColor.colorFromRGB(207, g: 150, b: 167),
+         UIColor.colorFromRGB(109, g: 211, b: 239),
+         UIColor.colorFromRGB(103, g: 209, b: 62)
+       ]
+       return palette
+     }
+}

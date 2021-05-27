@@ -76,6 +76,8 @@
 		806027C325F7B36600B04202 /* XMPPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806027C225F7B36600B04202 /* XMPPManager.swift */; };
 		806027C725F7B64000B04202 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 806027C625F7B64000B04202 /* Alamofire */; };
 		809A0176265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */; };
+		809A0179265F73BE00BE1657 /* MessageKitAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */; };
+		809A017C265F775400BE1657 /* UIKitExtenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A017B265F775400BE1657 /* UIKitExtenstions.swift */; };
 		809A969B26267A1400A92048 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 809A969A26267A1400A92048 /* RxSwift */; };
 		80AE1121262831F000AA26CF /* LocalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE1120262831F000AA26CF /* LocalUser.swift */; };
 		80B560A82658B002001212AB /* MessageKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B560A72658B002001212AB /* MessageKitError.swift */; };
@@ -180,6 +182,8 @@
 		802100E72604FCF3004C6429 /* XMPPMamWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMPPMamWorker.swift; sourceTree = "<group>"; };
 		806027C225F7B36600B04202 /* XMPPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPManager.swift; sourceTree = "<group>"; };
 		809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_MessageKitExtensions.swift; sourceTree = "<group>"; };
+		809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MessageKitAssets.xcassets; sourceTree = "<group>"; };
+		809A017B265F775400BE1657 /* UIKitExtenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtenstions.swift; sourceTree = "<group>"; };
 		80AE1120262831F000AA26CF /* LocalUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUser.swift; sourceTree = "<group>"; };
 		80B560A72658B002001212AB /* MessageKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitError.swift; sourceTree = "<group>"; };
 		80B560C32658B5A9001212AB /* TextMessageCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCellCustom.swift; sourceTree = "<group>"; };
@@ -348,6 +352,7 @@
 				55C5D80A24F458C3000B53A1 /* StartChat.swift */,
 				55D04A2F24F063C700BFBF9A /* Extensions.swift */,
 				5515CE1E24FC25240025FCB4 /* MessageKitDefaults.swift */,
+				809A017B265F775400BE1657 /* UIKitExtenstions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -441,6 +446,7 @@
 				80C3D4BB265CCE7500ECBFC8 /* MessagesCollectionViewFlowLayout_Custom.swift */,
 				80C3D4BE265CCF6C00ECBFC8 /* MessageCollectionView_Custom.swift */,
 				809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */,
+				809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */,
 			);
 			path = MessageKitCustom;
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 				55404AF824E9B63E00844839 /* Assets.xcassets in Resources */,
 				55404AF624E9B63C00844839 /* Main.storyboard in Resources */,
 				5599F62724EB08CD00989C70 /* GoogleService-Info.plist in Resources */,
+				809A0179265F73BE00BE1657 /* MessageKitAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,6 +776,7 @@
 				55404AF124E9B63C00844839 /* SceneDelegate.swift in Sources */,
 				80C3D4E4265D006400ECBFC8 /* LocationMessageCellCustom_Reply.swift in Sources */,
 				80D2F32925F888C40030E342 /* TestListen.swift in Sources */,
+				809A017C265F775400BE1657 /* UIKitExtenstions.swift in Sources */,
 				55FA0EA9250FF29A00FF6BB0 /* AudioMessage.swift in Sources */,
 				55C5D80924F451F4000B53A1 /* RecentTableViewCell.swift in Sources */,
 				5515CE2124FC270E0025FCB4 /* MKMessage.swift in Sources */,

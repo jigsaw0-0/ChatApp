@@ -42,3 +42,5 @@ public let kREADDATE = "date"
 public let kADMINID = "adminId"
 public let kMEMBERIDS = "memberIds"
 public let kREPLYVIEWHEIGHT : CGFloat = 70
+
+
