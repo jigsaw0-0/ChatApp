@@ -16,10 +16,25 @@ open class TextMessageSizeCalculator_Custom_Reply: TextMessageSizeCalculator_Cus
         var size = super.messageContainerSize(for: message)
         size.height = size.height + kREPLYVIEWHEIGHT
         
-        size.width = max(size.width, 200)
+        size.width = max(size.width, 220)
         return size
         
     }
+    
+//    open func getTextLabelWidthForString(_ message : MKMessage) -> CGSize {
+//        
+//        var maxWidth = messageContainerMaxWidth(for: message)
+//        if message.previousMsgType == "text" {
+//        attributedText = NSAttributedString(string: message.previousBody, attributes: [.font: messageLabelFont])
+//        messageContainerSize = labelSize(for: attributedText, considering: maxWidth)
+//        }else{
+//            maxWidth = 210
+//        }
+//        
+//        
+//        
+//    }
+    
     
     
 }

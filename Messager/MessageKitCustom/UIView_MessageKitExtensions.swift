@@ -7,6 +7,26 @@
 
 import UIKit
 
+
+
+internal extension UILabel {
+    
+    
+    class func MKLabelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
+        let constraintBox = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let rect = attributedText.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
+
+        return rect.size
+    }
+    
+    
+    
+    
+    
+}
+
+
+
 internal extension UIView {
     
     func fillSuperview() {

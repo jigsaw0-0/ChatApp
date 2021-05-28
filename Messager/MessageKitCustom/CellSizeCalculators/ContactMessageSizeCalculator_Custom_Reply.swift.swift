@@ -11,7 +11,14 @@ import MessageKit
 
 open class ContactMessageSizeCalculator_Custom_Reply: ContactMessageSizeCalculator_Custom {
     
-    
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
+        var size = super.messageContainerSize(for: message)
+        size.height = size.height + kREPLYVIEWHEIGHT
+        
+        size.width = max(size.width, 220)
+        return size
+        
+    }
 //    open override func messageContainerSize(for message: MessageType) -> CGSize {
 //        var size = super.messageContainerSize(for: message)
 //        size.height = size.height + 100

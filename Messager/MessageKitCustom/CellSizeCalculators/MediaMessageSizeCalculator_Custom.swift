@@ -19,13 +19,6 @@ open class MediaMessageSizeCalculator_Custom: MediaMessageSizeCalculator {
 //        
 //    }
     
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
-        
-        var size = super.messageContainerSize(for: message)
-        size.height += kREPLYVIEWHEIGHT
-        return size
-    
-    }
-    
+
     
 }

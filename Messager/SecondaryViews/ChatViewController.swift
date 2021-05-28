@@ -13,6 +13,8 @@ import RealmSwift
 
 class ChatViewController: MessagesViewController {
     
+    var previewVC : PreviewVC?
+    
     //MARK: - Views
     let leftBarButtonView: UIView = {
         return UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
@@ -571,7 +573,7 @@ class ChatViewController: MessagesViewController {
                 let cell = messagesCollectionView.dequeueReusableCell(TextMessageCellCustom_Reply.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
-               // cell.messageLabel.backgroundColor = UIColor.red
+                // cell.messageLabel.backgroundColor = UIColor.red
                 return cell
             case .photo, .video:
                 let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom_Reply.self, for: indexPath)
@@ -605,7 +607,48 @@ class ChatViewController: MessagesViewController {
         
     }
 
-
+    
+    
+    
+     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        
+        return UIContextMenuConfiguration(identifier: nil,
+                                              previewProvider: nil,
+                                              actionProvider: {
+                    suggestedActions in
+                let replyAction =
+                    UIAction(title: NSLocalizedString("Reply", comment: ""),
+                             image: UIImage(systemName: "arrowshape.turn.up.left")) { action in
+                    }
+                    
+                let copyAction =
+                    UIAction(title: NSLocalizedString("Copy", comment: ""),
+                             image: UIImage(systemName: "plus.square.on.square")) { action in
+                    }
+                    
+//                let deleteAction =
+//                    UIAction(title: NSLocalizedString("DeleteTitle", comment: ""),
+//                             image: UIImage(systemName: "trash"),
+//                             attributes: .destructive) { action in
+//                    }
+                                                
+                return UIMenu(title: "", children: [replyAction, copyAction])
+            })
+        
+    }
+    
+    func makePreview() -> UIViewController{
+        if previewVC == nil {
+            previewVC = UIStoryboard.init(name: "MKStoryboard", bundle: nil).instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
+            
+        }
+        previewVC?.view.backgroundColor = UIColor.blue
+        return previewVC!
+        
+    }
+    
+    
 }
 
 

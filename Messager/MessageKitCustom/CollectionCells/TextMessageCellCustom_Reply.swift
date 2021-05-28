@@ -57,7 +57,7 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
             replyView.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: nil, right:  messageContainerView.rightAnchor, centerY: nil, centerX: nil, topConstant: 7, leftConstant: attributes.messageLabelInsets.left - 4, bottomConstant: 7, rightConstant: attributes.messageLabelInsets.right - 6, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: kREPLYVIEWHEIGHT - 14)
             
             
-            leftColorView.addConstraints(replyView.topAnchor, left: replyView.leftAnchor, bottom: replyView.bottomAnchor, right: nil, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 4, heightConstant: 0)
+            leftColorView.addConstraints(replyView.topAnchor, left: replyView.leftAnchor, bottom: replyView.bottomAnchor, right: nil, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 3, heightConstant: 0)
         
             
             replySenderName.addConstraints(replyView.topAnchor, left: leftColorView.rightAnchor, bottom: nil, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 80, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: 30)
