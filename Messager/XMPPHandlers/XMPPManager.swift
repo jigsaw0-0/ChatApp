@@ -40,7 +40,7 @@ class XMPPManager: NSObject {
     private var xmppRoster: XMPPRoster!
     private var xmppRosterStorage: XMPPRosterCoreDataStorage!
     private var xmppvCardStorage: XMPPvCardCoreDataStorage!
-    private var xmppvCardTempModule: XMPPvCardTempModule!
+    var xmppvCardTempModule: XMPPvCardTempModule!
     private var xmppvCardAvatarModule: XMPPvCardAvatarModule!
     
     private var xmppCapabilities: XMPPCapabilities!
@@ -225,6 +225,15 @@ class XMPPManager: NSObject {
 }
 
 
+extension XMPPManager: XMPPReconnectDelegate {
+    
+    
+    
+    
+    
+}
+
+
 
 extension XMPPManager: XMPPMessageCarbonsDelegate {
     
@@ -257,6 +266,37 @@ extension XMPPManager: XMPPRoomDelegate {
 
     }
     
+    
+    
+}
+
+
+extension XMPPManager : XMPPvCardAvatarDelegate {
+    
+    func xmppvCardAvatarModule(_ vCardTempModule: XMPPvCardAvatarModule, didReceivePhoto photo: UIImage, for jid: XMPPJID) {
+        print("VCARDModule didReceivePhoto")
+    }
+
+}
+
+extension XMPPManager : XMPPvCardTempModuleDelegate {
+    
+    func xmppvCardTempModuleDidUpdateMyvCard(_ vCardTempModule: XMPPvCardTempModule) {
+        print("VCARDModule Checkpoint 1")
+    }
+    
+    func xmppvCardTempModule(_ vCardTempModule: XMPPvCardTempModule, failedToUpdateMyvCard error: DDXMLElement?) {
+        print("VCARDModule Checkpoint 2")
+
+    }
+    func xmppvCardTempModule(_ vCardTempModule: XMPPvCardTempModule, failedToFetchvCardFor jid: XMPPJID, error: DDXMLElement?) {
+        print("VCARDModule Checkpoint 3")
+    }
+    
+    func xmppvCardTempModule(_ vCardTempModule: XMPPvCardTempModule, didReceivevCardTemp vCardTemp: XMPPvCardTemp, for jid: XMPPJID) {
+        print("VCARDModule Checkpoint 4 \(vCardTemp.name)")
+
+    }
     
     
 }
@@ -331,20 +371,38 @@ extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate 
     func xmppStreamDidAuthenticate(_ sender: XMPPStream) {
         print("Stream: Authenticated")
         
+        
+        
+        
         self.xmppMessageCarbons.enable()
         self.xmppMessageCarbons.autoEnableMessageCarbons = true
         
         let currentUser = User.init(self.userId, username: "Sriram", email: "", pushId: "", avatarLink: "", status: "")
         saveUserLocallyXMPP(currentUser)
+        
+        
+        print("Test learn", self.xmppStream.serverXmppStreamVersionNumber())
+        
         XMPPMessageListener.shared.listenForSingleMessages()
         
-                        let rJID = XMPPJID.init(string: "347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com")
-                        let roomStorage : XMPPRoomMemoryStorage = XMPPRoomMemoryStorage.init()
-                        let xmppRoom = XMPPRoom.init(roomStorage: roomStorage, jid: rJID!, dispatchQueue: DispatchQueue.main)
-                        xmppRoom.activate(self.xmppStream)
-                        xmppRoom.addDelegate(self, delegateQueue: DispatchQueue.main)
+        let rJID = XMPPJID.init(string: "347c326276444e4c74584265453d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com")
+        let roomStorage : XMPPRoomMemoryStorage = XMPPRoomMemoryStorage.init()
+        let xmppRoom = XMPPRoom.init(roomStorage: roomStorage, jid: rJID!, dispatchQueue: DispatchQueue.main)
+        xmppRoom.activate(self.xmppStream)
+        xmppRoom.addDelegate(self, delegateQueue: DispatchQueue.main)
         
-                        xmppRoom.join(usingNickname: "\(self.xmppStream.myJID?.user ?? "")", history: nil, password: nil)
+        xmppRoom.join(usingNickname: "\(self.xmppStream.myJID?.user ?? "")", history: nil, password: nil)
+        
+        
+        // Sending Presence -- Try
+        let press = XMPPPresence()
+        print("some prrrr -> \(press)")
+        self.xmppStream.send(press)
+
+        
+        
+        
+        
         
         
         
@@ -496,7 +554,12 @@ extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate 
         print("\nGot Message -> \(message)")
 
         
-        XMPPMessageListener.shared.handleStreamMessage(message)
+        if message.hasComposingChatState {
+            XMPPTypingListener.shared.feedComposeMessage(message: message)
+        }else{
+        
+            XMPPMessageListener.shared.handleStreamMessage(message)
+        }
         
 //        if message.isChatMessageWithBody{
 //            let user = xmppRosterStorage.user(for: message.from!, xmppStream: xmppStream, managedObjectContext: self.managedObjectContext_roster())
@@ -512,7 +575,8 @@ extension XMPPManager: XMPPStreamDelegate, XMPPMessageArchiveManagementDelegate 
     
     
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
-        print(presence)
+        
+        print("Received Press -> \(presence)")
         let presenceType = presence.type!
         let username = sender.myJID?.user
         let presenceFromUser = presence.from?.user
@@ -563,7 +627,7 @@ extension XMPPManager: XMPPRosterDelegate {
     
     }
     func xmppRoster(_ sender: XMPPRoster, didReceivePresenceSubscriptionRequest presence: XMPPPresence) {
-       // print("$$RosterCheck 4")
+        print("$$RosterCheck 4")
     
     }
     

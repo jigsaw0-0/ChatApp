@@ -28,8 +28,8 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             }
         }
         
-        messageInputBar.inputTextView.text = ""
-        messageInputBar.invalidatePlugins()
+        messageInputBarCustom.inputTextView.text = ""
+        messageInputBarCustom.invalidatePlugins()
     }
     
     

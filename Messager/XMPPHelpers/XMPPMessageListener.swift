@@ -409,6 +409,7 @@ class XMPPMessageListener {
         case "image","photo":
             msgAttrStr = "image"
             messageBody = message.pictureUrl
+            
         case "video":
             msgAttrStr = "video"
             messageBody = message.videoUrl
@@ -425,7 +426,22 @@ class XMPPMessageListener {
         }
         msg.addBody(messageBody)
         msgAttr.addAttribute(withName: "type", stringValue: msgAttrStr)
+        if message.reply {
+            msgAttr.addAttribute(withName: "reply", stringValue: "yes")
+            let previousdata = DDXMLElement.init(name: "previousdata")
+            previousdata.addAttribute(withName: "body", stringValue: message.previousBody)
+            previousdata.addAttribute(withName: "msgid", stringValue: message.previousMsgId)
+            previousdata.addAttribute(withName: "msgtype", stringValue: message.previousMsgType)
+            msg.addChild(previousdata)
+        }
+        
         msg.addChild(msgAttr)
+        msg.addActiveChatState()
+        
+        
+        
+        
+        
         XMPPManager.shared.sendMessage(msg)
         
         

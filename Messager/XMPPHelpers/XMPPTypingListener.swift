@@ -7,12 +7,21 @@
 
 import Foundation
 import Firebase
+import XMPPFramework
+import RxSwift
+
 
 class XMPPTypingListener {
     
     static let shared = XMPPTypingListener()
     
     var typingListener: ListenerRegistration!
+    
+    let composeSubject = PublishSubject<String>()
+    var subscription : Disposable?
+    let disposeBagSubscription = DisposeBag()
+    
+    
     
     private init() { }
     
@@ -46,5 +55,12 @@ class XMPPTypingListener {
     func removeTypingListener() {
       //  self.typingListener.remove()
     }
+    
+    func feedComposeMessage(message : XMPPMessage) {
+        print("Compose Message ->\(message.fromStr ?? "Nothing")")
+        composeSubject.onNext(message.fromStr ?? "Nothing")
+        
+    }
+    
     
 }

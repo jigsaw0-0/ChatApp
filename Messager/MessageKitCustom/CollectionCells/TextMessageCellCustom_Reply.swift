@@ -36,6 +36,9 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
             replySenderName.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
             leftColorView.backgroundColor = UIColor.replyBubbleColors()[2]
             
+            replyLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+            replyLabel.textColor = UIColor.replyLabelColor()
+            
             if message.previousMsgType == "image" || message.previousMsgType == "video" {
                 replyLabel.text = message.previousMsgType == "image" ? "Photo" : "Video"
                 if let imgURL = URL.init(string: message.previousBody) {

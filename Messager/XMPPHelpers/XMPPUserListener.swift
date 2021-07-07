@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import RxSwift
 import KissXML
+import XMPPFramework
 
 @objc class XMPPUserListener : NSObject {
     
@@ -21,8 +22,7 @@ import KissXML
     let disposeBag = DisposeBag()
     
     let subject = BehaviorSubject<[User]>(value: [])
-  
-    
+    let typingSubject = PublishSubject<String>()
     private override init () {
        
         
@@ -60,6 +60,15 @@ import KissXML
         
     }
     
+    func pushTypingEventForMessage(_ xmppMessage : XMPPMessage){
+        
+        let jid = "asdkjhashjkd"
+        
+        typingSubject.onNext(jid)
+        
+    }
+    
+    
     func pushRosterUpdateEvent(){
       //  self.arrayOfUsers.removeAll()
 //        var user = User.init("337c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b53707537475568456f37576f47594765737a395138695a687853513d3d@conference.chatbeta.justdial.com", username: "ZZ Gunjan", email: "", pushId: "", avatarLink: "", status: "")
@@ -76,7 +85,12 @@ import KissXML
         self.subject.onNext(self.arrayOfUsers)
 //        XMPPManager.shared.fetchMessagesForRoomId("347c326276514d725a58434f383d7c704e79374d387857624f35746f513d3d7c72644734567151395a2b5a3779664b537075374755684572376d63465a6d4f6d7a4e733867354a3153773d3d@conference.chatbeta.justdial.com")
         for user in arrayOfUsers {
+            print("\nRoster User Id->\(user.id)")
+            
+           // XMPPManager.shared.xmppvCardTempModule.fetchvCardTemp(for: XMPPJID.init(string: user.id)!)
             XMPPManager.shared.fetchMessagesForRoomId(user.id)
+            
+            
         }
         
     }

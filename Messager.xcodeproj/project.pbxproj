@@ -67,6 +67,7 @@
 		55FBE25624F6EA9100ECE961 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBE25524F6EA9100ECE961 /* ChatViewController.swift */; };
 		800590512660E44000A3482F /* MKStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 800590502660E44000A3482F /* MKStoryboard.storyboard */; };
 		8005906D2660E4AA00A3482F /* PreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8005906C2660E4AA00A3482F /* PreviewVC.swift */; };
+		800590712660F2D500A3482F /* InputBarAccessoryViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800590702660F2D500A3482F /* InputBarAccessoryViewCustom.swift */; };
 		802100E82604FCF3004C6429 /* XMPPMamWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802100E72604FCF3004C6429 /* XMPPMamWorker.swift */; };
 		804558FB25F6D7EA00CEFE7D /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FA25F6D7EA00CEFE7D /* MBProgressHUD */; };
 		804558FF25F6D82800CEFE7D /* InputBarAccessoryView in Frameworks */ = {isa = PBXBuildFile; productRef = 804558FE25F6D82800CEFE7D /* InputBarAccessoryView */; };
@@ -183,6 +184,7 @@
 		55FBE25524F6EA9100ECE961 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		800590502660E44000A3482F /* MKStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MKStoryboard.storyboard; sourceTree = "<group>"; };
 		8005906C2660E4AA00A3482F /* PreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewVC.swift; sourceTree = "<group>"; };
+		800590702660F2D500A3482F /* InputBarAccessoryViewCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewCustom.swift; sourceTree = "<group>"; };
 		802100E72604FCF3004C6429 /* XMPPMamWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMPPMamWorker.swift; sourceTree = "<group>"; };
 		806027C225F7B36600B04202 /* XMPPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPManager.swift; sourceTree = "<group>"; };
 		809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_MessageKitExtensions.swift; sourceTree = "<group>"; };
@@ -433,6 +435,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8005906F2660F2C400A3482F /* InputBarCustom */ = {
+			isa = PBXGroup;
+			children = (
+				800590702660F2D500A3482F /* InputBarAccessoryViewCustom.swift */,
+			);
+			path = InputBarCustom;
+			sourceTree = "<group>";
+		};
 		806027C025F7B34300B04202 /* XMPPHandlers */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +454,7 @@
 		80B560A62658AFEA001212AB /* MessageKitCustom */ = {
 			isa = PBXGroup;
 			children = (
+				8005906F2660F2C400A3482F /* InputBarCustom */,
 				80C3D4C1265CF60200ECBFC8 /* CellSizeCalculators */,
 				80B560C22658B4FB001212AB /* CollectionCells */,
 				80B560A72658B002001212AB /* MessageKitError.swift */,
@@ -779,6 +790,7 @@
 				55C5D80B24F458C3000B53A1 /* StartChat.swift in Sources */,
 				80C3D4DE265D004A00ECBFC8 /* TextMessageCellCustom_Reply.swift in Sources */,
 				80C3D4EA265D007D00ECBFC8 /* ContactMessageCellCustom_Reply.swift in Sources */,
+				800590712660F2D500A3482F /* InputBarAccessoryViewCustom.swift in Sources */,
 				55F4ACE82511516C00C35B6B /* MyChannelsTableViewController.swift in Sources */,
 				80C3D4BF265CCF6C00ECBFC8 /* MessageCollectionView_Custom.swift in Sources */,
 				55E1A0C7250D600E009E2624 /* VideoMessage.swift in Sources */,

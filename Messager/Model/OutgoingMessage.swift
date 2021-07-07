@@ -12,7 +12,7 @@ import Gallery
 
 class OutgoingMessage {
     
-    class func send(chatId: String, text: String?, photo: UIImage?, video: Video?, audio: String?, audioDuration: Float = 0.0, location: String?, memberIds: [String]) {
+    class func send(chatId: String, text: String?, photo: UIImage?, video: Video?, audio: String?, audioDuration: Float = 0.0, location: String?, memberIds: [String], replyObject:Dictionary<String, String>?) {
         
         if let currentUser = User.currentUserXMPP {
         
@@ -25,6 +25,14 @@ class OutgoingMessage {
         message.date = Date()
         message.status = kSENT
         
+            if let replyObj = replyObject, replyObj.count > 0 {
+                message.reply = true
+                message.previousBody = replyObj["body"] ?? ""
+                message.previousMsgId = replyObj["msgid"] ?? ""
+                message.previousMsgType = replyObj["msgtype"] ?? ""
+            }
+            
+            
         if text != nil {
             sendTextMessage(message: message, text: text!, memberIds: memberIds)
         }

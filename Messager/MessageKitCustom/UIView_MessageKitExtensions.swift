@@ -146,4 +146,9 @@ extension UIColor {
        ]
        return palette
      }
+    
+    class func replyLabelColor() -> UIColor {
+      return UIColor.colorFromRGB(167, g: 167, b: 173)
+    }
+    
 }

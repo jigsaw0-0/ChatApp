@@ -10,18 +10,33 @@ import MessageKit
 import InputBarAccessoryView
 import Gallery
 import RealmSwift
+import RxSwift
 
 class ChatViewController: MessagesViewController {
-    
+    open lazy var messageInputBarCustom = InputBarAccessoryView()
     var previewVC : PreviewVC?
+    var replyView : UIView!
+    var replyLeftLine : UIView!
+    var replySenderName : UILabel!
+    var replyLabel : UILabel!
+    var replyRightImageVIew : UIImageView!
+    var onlineStatus = true {
+        didSet {
+            print("Online Status changed")
+        }
+        
+    }
     
+    
+    
+    var replyObject : Dictionary<String, String>?
     //MARK: - Views
     let leftBarButtonView: UIView = {
         return UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
     }()
     
     let titleLabel: UILabel = {
-       let title = UILabel(frame: CGRect(x: 5, y: 0, width: 180, height: 25))
+       let title = UILabel(frame: CGRect(x: 50, y: 0, width: 180, height: 25))
         title.textAlignment = .left
         title.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         title.adjustsFontSizeToFitWidth = true
@@ -29,13 +44,35 @@ class ChatViewController: MessagesViewController {
     }()
     
     let subTitleLabel: UILabel = {
-       let subTitle = UILabel(frame: CGRect(x: 5, y: 22, width: 180, height: 20))
+       let subTitle = UILabel(frame: CGRect(x: 50, y: 22, width: 180, height: 20))
         subTitle.textAlignment = .left
         subTitle.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         subTitle.adjustsFontSizeToFitWidth = true
         return subTitle
     }()
 
+    let avatarImageContainer: UIView = {
+       let avatarContainer = UIView(frame: CGRect(x: 5, y: 6, width: 34, height: 34))
+       let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        imageView.backgroundColor = UIColor.red
+        imageView.layer.cornerRadius = 17
+        imageView.layer.masksToBounds = true
+        avatarContainer.addSubview(imageView)
+        imageView.tag = 1
+        
+        let imageViewStatus = UIImageView(frame: CGRect(x: 26, y: 24, width: 8, height: 8))
+        imageViewStatus.backgroundColor = UIColor.green
+        imageViewStatus.layer.cornerRadius = 4
+        imageViewStatus.layer.masksToBounds = true
+        avatarContainer.addSubview(imageViewStatus)
+        imageViewStatus.tag = 2
+        
+        return avatarContainer
+    }()
+
+    
+    
+    
     
     //MARK: - Vars
     private var chatId = ""
@@ -69,6 +106,14 @@ class ChatViewController: MessagesViewController {
     var audioFileName = ""
     var audioDuration: Date!
     
+    open override var inputAccessoryView: UIView? {
+        return messageInputBarCustom
+    }
+    
+    var composeSubscription : Disposable?
+    var composedDisposeBag = DisposeBag()
+    weak var timer : Timer?
+    
     //MARK: - Inits
     init(chatId: String, recipientId: String, recipientName: String) {
         
@@ -77,9 +122,7 @@ class ChatViewController: MessagesViewController {
         self.chatId = chatId
         self.recipientId = chatId
         self.recipientName = recipientName
-        
         registerReusableCells()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -120,6 +163,9 @@ class ChatViewController: MessagesViewController {
         configureMessageInputBar()
 
         loadChats()
+        
+        updateTypingIndicator(false)
+        self.subscribeForComposeMessage()
        // listenForNewChats()
        // listenForReadStatusChange()
     }
@@ -135,6 +181,21 @@ class ChatViewController: MessagesViewController {
         
         XMPPRecentListener.shared.resetRecentCounter(chatRoomId: chatId)
         audioController.stopAnyOngoingPlaying()
+    }
+    
+    
+    func subscribeForComposeMessage(){
+        
+        composeSubscription = XMPPTypingListener.shared.composeSubject.filter{$0.contains(self.chatId)}.subscribe { (event) in
+            
+            self.updateTypingIndicator(true)
+            
+        }
+        composeSubscription?.disposed(by: composedDisposeBag)
+        
+        
+        
+        
     }
     
     //MARK: - Configurations
@@ -159,7 +220,7 @@ class ChatViewController: MessagesViewController {
     
     private func configureMessageInputBar() {
         
-        messageInputBar.delegate = self
+        messageInputBarCustom.delegate = self
         
         let attachButton = InputBarButtonItem()
         attachButton.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
@@ -177,25 +238,27 @@ class ChatViewController: MessagesViewController {
         
         micButton.addGestureRecognizer(longPressGesture)
         
-        messageInputBar.setStackViewItems([attachButton], forStack: .left, animated: false)
+        messageInputBarCustom.setStackViewItems([attachButton], forStack: .left, animated: false)
         
-        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBarCustom.setLeftStackViewWidthConstant(to: 36, animated: false)
         
         updateMicButtonStatus(show: true)
         
-        messageInputBar.inputTextView.isImagePasteEnabled = false
-        messageInputBar.backgroundView.backgroundColor = .systemBackground
-        messageInputBar.inputTextView.backgroundColor = .systemBackground
+        messageInputBarCustom.inputTextView.isImagePasteEnabled = false
+        messageInputBarCustom.backgroundView.backgroundColor = .systemBackground
+        messageInputBarCustom.inputTextView.backgroundColor = .systemBackground
+        
+        setupReplyView()
     }
     
     func updateMicButtonStatus(show: Bool) {
         
         if show {
-            messageInputBar.setStackViewItems([micButton], forStack: .right, animated: false)
-            messageInputBar.setRightStackViewWidthConstant(to: 30, animated: false)
+            messageInputBarCustom.setStackViewItems([micButton], forStack: .right, animated: false)
+            messageInputBarCustom.setRightStackViewWidthConstant(to: 30, animated: false)
         } else {
-            messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: false)
-            messageInputBar.setRightStackViewWidthConstant(to: 55, animated: false)
+            messageInputBarCustom.setStackViewItems([messageInputBarCustom.sendButton], forStack: .right, animated: false)
+            messageInputBarCustom.setRightStackViewWidthConstant(to: 55, animated: false)
         }
     }
     
@@ -207,12 +270,13 @@ class ChatViewController: MessagesViewController {
         
         leftBarButtonView.addSubview(titleLabel)
         leftBarButtonView.addSubview(subTitleLabel)
-
+        leftBarButtonView.addSubview(avatarImageContainer)
         let leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonView)
-        
+
         self.navigationItem.leftBarButtonItems?.append(leftBarButtonItem)
         
         titleLabel.text = recipientName
+        
     }
     
     
@@ -234,7 +298,7 @@ class ChatViewController: MessagesViewController {
             case .initial:
                 self.insertMessages()
                 self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToLastItem(animated: true)
+                self.messagesCollectionView.scrollToLastItem(animated: false)
 
             case .update(_, _ , let insertions, _):
 
@@ -358,14 +422,16 @@ class ChatViewController: MessagesViewController {
 
     func messageSend(text: String?, photo: UIImage?, video: Video?, audio: String?, location: String?, audioDuration: Float = 0.0) {
         if User.currentUserXMPP != nil {
-            OutgoingMessage.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio, audioDuration: audioDuration, location: location, memberIds: [recipientId])
+            OutgoingMessage.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio, audioDuration: audioDuration, location: location, memberIds: [recipientId], replyObject: replyObject)
+            replyObject = nil
+            refreshReplyView()
         }
     }
 
     
     private func actionAttachMessage() {
         
-        messageInputBar.inputTextView.resignFirstResponder()
+        messageInputBarCustom.inputTextView.resignFirstResponder()
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -464,12 +530,17 @@ class ChatViewController: MessagesViewController {
     
     
     func updateTypingIndicator(_ show: Bool) {
-        
-        subTitleLabel.text = show ? "Typing..." : ""
+        timer?.invalidate()
+        subTitleLabel.text = show ? "Typing..." : (onlineStatus ? "online" : "")
+        if show {
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(resetTyping), userInfo: nil, repeats: false)
+        }
     }
     
-    
-
+    @objc func resetTyping(){
+        updateTypingIndicator(false)
+        
+    }
 
     //MARK: - Gallery
     private func showImageGallery(camera: Bool) {
@@ -620,6 +691,7 @@ class ChatViewController: MessagesViewController {
                 let replyAction =
                     UIAction(title: NSLocalizedString("Reply", comment: ""),
                              image: UIImage(systemName: "arrowshape.turn.up.left")) { action in
+                        self.setReplyViewForIndexPath(indexPath)
                     }
                     
                 let copyAction =
@@ -645,6 +717,130 @@ class ChatViewController: MessagesViewController {
         }
         previewVC?.view.backgroundColor = UIColor.blue
         return previewVC!
+        
+    }
+     
+    
+    func setReplyViewForIndexPath(_ indexPath : IndexPath) {
+        print("\nIndexPath selected \(indexPath)")
+        
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! MKMessage
+        replyObject = [:]
+        replyRightImageVIew.image = nil
+        let textMessageKind = message.kind
+        switch textMessageKind {
+        case .text(let text),.emoji(let text):
+            self.replyObject!["body"] = text
+            self.replyLabel.text = text
+            self.replyObject!["msgtype"] = "text"
+
+        case .photo(let photo):
+            if let img = photo.image {
+                replyRightImageVIew.image = img
+            }else{
+                
+                if let imgURL = photo.url {
+                    
+                    replyRightImageVIew.sd_setImage(with: imgURL, placeholderImage: nil, options: .progressiveLoad, completed: nil)
+                }
+            }
+            self.replyObject!["msgtype"] = "image"
+
+            self.replyLabel.text = "Photo"
+            self.replyObject!["body"] = photo.url?.absoluteString ?? ""
+            self.replyObject!["body"] = self.replyObject!["body"]!.replacingOccurrences(of: "file:///", with: "").replacingOccurrences(of: "https:/images", with: "https://images")
+        case .video(let video):
+            print("Something")
+        default:
+            print("asd")
+            
+        }
+        self.replyObject!["name"] = "Dummy Name"
+        self.replyObject!["msgid"] = message.messageId
+        
+        refreshReplyView()
+        
+        
+    }
+    
+    @objc func replyClearAction(_ sender : UIButton) {
+        
+        replyObject = nil
+        refreshReplyView()
+        
+    }
+    
+    func refreshReplyView() {
+        if replyObject != nil && replyObject!.count > 0 {
+            replyView.isHidden = false
+        }else{
+            replyView.isHidden = true
+        }
+        
+    }
+    
+    
+    
+    func setupReplyView() {
+        
+        replyView = UIView()
+        replyLeftLine = UIView()
+        replySenderName = UILabel.init()
+        replyLabel = UILabel.init()
+        replyRightImageVIew = UIImageView.init()
+        
+        //replyView.backgroundColor = UIColor.blue
+        replyView.translatesAutoresizingMaskIntoConstraints = true
+        replyView.heightAnchor.constraint(equalToConstant: 56).isActive = true
+       // replyView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        (inputAccessoryView as? InputBarAccessoryView)?.topStackView.addArrangedSubview(replyView)
+        (inputAccessoryView as? InputBarAccessoryView)?.topStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let closeButton = UIButton()
+        replyView.addSubview(closeButton)
+        closeButton.setImage(UIImage.init(systemName: "clear"), for: .normal)
+        
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addConstraints(replyView.topAnchor, left: nil, bottom: replyView.bottomAnchor, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 50, heightConstant: 0)
+        
+        replyView.addSubview(replyLeftLine)
+        replyView.addSubview(replySenderName)
+        replyView.addSubview(replyLabel)
+        replyView.addSubview(replyRightImageVIew)
+        
+        
+        replyLeftLine.addConstraints(replyView.topAnchor, left: replyView.leftAnchor, bottom: replyView.bottomAnchor, right: nil, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 4, heightConstant: 0)
+        
+        replyLeftLine.backgroundColor = UIColor.replyBubbleColors()[2]
+        
+        replySenderName.addConstraints(replyView.topAnchor, left: replyLeftLine.rightAnchor, bottom: nil, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 70, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: 25)
+        replySenderName.textColor = UIColor.replyBubbleColors()[2]
+        replySenderName.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        replySenderName.text = "Dummy Name"
+        
+        replyLabel.addConstraints(replySenderName.bottomAnchor, left: replyLeftLine.rightAnchor, bottom: replyView.bottomAnchor, right: replyView.rightAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 70, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: 0)
+       // replyLabel.textColor = UIColor.replyBubbleColors()[2]
+        replyLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        replyLabel.text = "yo some message"
+        replyLabel.textColor = UIColor.replyLabelColor()
+        
+        
+        
+        closeButton.addTarget(self, action: #selector(replyClearAction(_:)), for: .touchUpInside)
+        
+        
+        replyRightImageVIew.addConstraints(replyView.topAnchor, left: nil, bottom: replyView.bottomAnchor, right: closeButton.leftAnchor, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 50, heightConstant: 0)
+        
+        
+        replyRightImageVIew.contentMode = .scaleAspectFit
+        
+        
+        replyView.isHidden = true
+        
         
     }
     
