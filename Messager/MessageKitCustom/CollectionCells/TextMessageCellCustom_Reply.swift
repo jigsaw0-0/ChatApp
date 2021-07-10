@@ -56,8 +56,8 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
         super.apply(layoutAttributes)
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.frame = CGRect(x: 0, y: kREPLYVIEWHEIGHT, width: messageContainerView.bounds.width, height: messageContainerView.bounds.height - kREPLYVIEWHEIGHT)
-        
-            replyView.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: nil, right:  messageContainerView.rightAnchor, centerY: nil, centerX: nil, topConstant: 7, leftConstant: attributes.messageLabelInsets.left - 4, bottomConstant: 7, rightConstant: attributes.messageLabelInsets.right - 6, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: kREPLYVIEWHEIGHT - 14)
+            //attributes.messageLabelInsets.left - 4 - left constant check!!!!
+            replyView.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: nil, right:  messageContainerView.rightAnchor, centerY: nil, centerX: nil, topConstant: 7, leftConstant: 6, bottomConstant: 7, rightConstant: attributes.messageLabelInsets.right - 6, centerYConstant: 0, centerXConstant: 0, widthConstant: 0, heightConstant: kREPLYVIEWHEIGHT - 14)
             
             
             leftColorView.addConstraints(replyView.topAnchor, left: replyView.leftAnchor, bottom: replyView.bottomAnchor, right: nil, centerY: nil, centerX: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, centerYConstant: 0, centerXConstant: 0, widthConstant: 3, heightConstant: 0)
@@ -101,16 +101,10 @@ open class TextMessageCellCustom_Reply : TextMessageCellCustom {
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
-
-        
         messageContainerView.frame = frame
-
         
     }
-    
-    
-    
-    
+        
     open override func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
        // var origin: CGPoint = .zero
 //        let padding = attributes.avatarLeadingTrailingPadding

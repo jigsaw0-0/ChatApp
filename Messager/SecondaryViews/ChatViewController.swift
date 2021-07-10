@@ -11,6 +11,7 @@ import InputBarAccessoryView
 import Gallery
 import RealmSwift
 import RxSwift
+import PDFKit
 
 class ChatViewController: MessagesViewController {
     open lazy var messageInputBarCustom = InputBarAccessoryView()
@@ -46,7 +47,7 @@ class ChatViewController: MessagesViewController {
     let subTitleLabel: UILabel = {
        let subTitle = UILabel(frame: CGRect(x: 50, y: 22, width: 180, height: 20))
         subTitle.textAlignment = .left
-        subTitle.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        subTitle.font = UIFont.systemFont(ofSize: 13, weight: .light)
         subTitle.adjustsFontSizeToFitWidth = true
         return subTitle
     }()
@@ -168,7 +169,56 @@ class ChatViewController: MessagesViewController {
         self.subscribeForComposeMessage()
        // listenForNewChats()
        // listenForReadStatusChange()
+        
+        self.pdfTest()
+        
     }
+    
+    func pdfTest(){
+            displayPdf()
+        
+        
+        
+        
+    }
+   
+    private func createPdfView(withFrame frame: CGRect) -> PDFView {
+        
+        let pdfView = PDFView(frame: frame)
+        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        pdfView.autoScales = true
+        
+        return pdfView
+    }
+    
+    
+    private func createPdfDocument(forFileName fileName: String) -> PDFDocument? {
+        if let resourceUrl = URL(string: "https://images.jdmagicbox.com/chatbot/4b6fbbc7-b79e-20de-efc6-160315bf4369.pdf") {
+            return PDFDocument(url: resourceUrl)
+        }
+        
+        return nil
+    }
+    
+    private func displayPdf() {
+        let pdfView = self.createPdfView(withFrame: CGRect(x: 0, y: 100, width: 300, height: 200))
+        
+        if let pdfDocument = self.createPdfDocument(forFileName: "heaps") {
+            self.view.addSubview(pdfView)
+            pdfView.document = pdfDocument
+//            let thumbnailView = PDFThumbnailView()
+//
+//            thumbnailView.frame = CGRect(x: 0, y: 100, width: self.view.frame.size.width, height: 300)
+//            thumbnailView.backgroundColor = UIColor.blue
+//            self.view.addSubview(thumbnailView)
+//            thumbnailView.pdfView = pdfView
+            
+            
+        }
+    }
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
