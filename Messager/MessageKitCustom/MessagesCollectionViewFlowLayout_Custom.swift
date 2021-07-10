@@ -22,6 +22,8 @@ open class MessagesCollectionViewFlowLayout_Custom: MessagesCollectionViewFlowLa
     lazy open var audioMessageSizeCalculator_custom = AudioMessageSizeCalculator_Custom(layout: self)
     lazy open var contactMessageSizeCalculator_custom = ContactMessageSizeCalculator_Custom(layout: self)
     lazy open var linkPreviewMessageSizeCalculator_custom = LinkPreviewMessageSizeCalculator_Custom(layout: self)
+    lazy open var documentMessageSizeCalculator_custom = DocumentMessageSizeCalculator_Custom(layout: self)
+
     
     lazy open var textMessageSizeCalculator_custom_R = TextMessageSizeCalculator_Custom_Reply(layout: self)
     lazy open var mediaMessageSizeCalculator_custom_R = MediaMessageSizeCalculator_Custom_Reply(layout: self)
@@ -29,7 +31,8 @@ open class MessagesCollectionViewFlowLayout_Custom: MessagesCollectionViewFlowLa
     lazy open var audioMessageSizeCalculator_custom_R = AudioMessageSizeCalculator_Custom_Reply(layout: self)
     lazy open var contactMessageSizeCalculator_custom_R = ContactMessageSizeCalculator_Custom_Reply(layout: self)
     lazy open var linkPreviewMessageSizeCalculator_custom_R = LinkPreviewMessageSizeCalculator_Custom_Reply(layout: self)
-    
+    lazy open var documentMessageSizeCalculator_custom_R = DocumentMessageSizeCalculator_Custom_Reply(layout: self)
+
     
     open override func messageSizeCalculators() -> [MessageSizeCalculator] {
         var arr : [MessageSizeCalculator] = super.messageSizeCalculators()
@@ -41,12 +44,20 @@ open class MessagesCollectionViewFlowLayout_Custom: MessagesCollectionViewFlowLa
     open override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let isMessageReply = (message as! MKMessage).reply
+        
         let cellSizeCalculator = super.cellSizeCalculatorForItem(at: indexPath)
         switch cellSizeCalculator {
         case is TextMessageSizeCalculator:
             return !isMessageReply ? textMessageSizeCalculator_custom : textMessageSizeCalculator_custom_R
         case is MediaMessageSizeCalculator:
+            
+            if (message as! MKMessage).documentUrl.count > 0{
+                return !isMessageReply ? documentMessageSizeCalculator_custom : documentMessageSizeCalculator_custom_R
+
+            }else{
+            
             return !isMessageReply ? mediaMessageSizeCalculator_custom : mediaMessageSizeCalculator_custom_R
+            }
         case is LocationMessageSizeCalculator:
             return !isMessageReply ? locationMessageSizeCalculator_custom : locationMessageSizeCalculator_custom_R
         case is AudioMessageSizeCalculator:
@@ -55,6 +66,7 @@ open class MessagesCollectionViewFlowLayout_Custom: MessagesCollectionViewFlowLa
             return !isMessageReply ? contactMessageSizeCalculator_custom : contactMessageSizeCalculator_custom_R
         case is LinkPreviewMessageSizeCalculator:
             return !isMessageReply ? linkPreviewMessageSizeCalculator_custom : linkPreviewMessageSizeCalculator_custom_R
+      
         
         default:
             return cellSizeCalculator

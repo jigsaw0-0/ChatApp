@@ -45,22 +45,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func performRealmMigration(){
         
         var configuration = Realm.Configuration(
-            schemaVersion: 3,
+            schemaVersion: 4,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
 
-                    // if just the name of your model's property changed you can do this
-                    //migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
+                  //   if just the name of your model's property changed you can do this
+  //                  migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
 
-                    // if you want to fill a new property with some values you have to enumerate
-                    // the existing objects and set the new value
-//                    migration.enumerateObjects(ofType: LocalUser.className()) { oldObject, newObject in
-//                        let text = oldObject!["text"] as! String
-//                        newObject!["textDescription"] = "The title is \(text)"
-//                    }
+//                     if you want to fill a new property with some values you have to enumerate
+//                     the existing objects and set the new value
+                    migration.enumerateObjects(ofType: LocalMessage.className()) { oldObject, newObject in
+                       // let text = oldObject!["text"] as! String
+                        newObject!["documentUrl"] = ""
+                    }
 
-                    // if you added a new property or removed a property you don't
-                    // have to do anything because Realm automatically detects that
+//                     if you added a new property or removed a property you don't
+//                     have to do anything because Realm automatically detects that
                 }
             }
         )

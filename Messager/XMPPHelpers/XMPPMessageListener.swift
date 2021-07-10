@@ -178,7 +178,9 @@ class XMPPMessageListener {
                                 message.type = kVIDEO
                                 message.videoUrl = body
                                 print("Got video body ->\(body)")
-                                
+                            case "document":
+                                message.type = kDOCUMENT
+                                message.documentUrl = body
                             default:
                                 message.type = kTEXT
                                 message.message = body
@@ -269,6 +271,9 @@ class XMPPMessageListener {
                              message.type = kVIDEO
                              message.videoUrl = body
                              print("Got video body ->\(body)")
+                         case "document":
+                             message.type = kDOCUMENT
+                             message.documentUrl = body
                              
                          default:
                              message.type = kTEXT

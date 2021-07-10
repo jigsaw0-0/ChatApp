@@ -78,6 +78,10 @@
 		806027BE25F7B32100B04202 /* XMPPFrameworkSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 806027BD25F7B32100B04202 /* XMPPFrameworkSwift */; };
 		806027C325F7B36600B04202 /* XMPPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806027C225F7B36600B04202 /* XMPPManager.swift */; };
 		806027C725F7B64000B04202 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 806027C625F7B64000B04202 /* Alamofire */; };
+		80844A372699955500C1D704 /* DocumentMessageCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80844A362699955500C1D704 /* DocumentMessageCellCustom.swift */; };
+		80844A3A269995A000C1D704 /* DocumentMessageCellCustom_Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80844A39269995A000C1D704 /* DocumentMessageCellCustom_Reply.swift */; };
+		80844A3D269995F300C1D704 /* DocumentMessageSizeCalculator_Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80844A3C269995F300C1D704 /* DocumentMessageSizeCalculator_Custom.swift */; };
+		80844A402699960A00C1D704 /* DocumentMessageSizeCalculator_Custom_Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80844A3F2699960A00C1D704 /* DocumentMessageSizeCalculator_Custom_Reply.swift */; };
 		809A0176265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */; };
 		809A0179265F73BE00BE1657 /* MessageKitAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */; };
 		809A017C265F775400BE1657 /* UIKitExtenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A017B265F775400BE1657 /* UIKitExtenstions.swift */; };
@@ -187,6 +191,10 @@
 		800590702660F2D500A3482F /* InputBarAccessoryViewCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewCustom.swift; sourceTree = "<group>"; };
 		802100E72604FCF3004C6429 /* XMPPMamWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMPPMamWorker.swift; sourceTree = "<group>"; };
 		806027C225F7B36600B04202 /* XMPPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPManager.swift; sourceTree = "<group>"; };
+		80844A362699955500C1D704 /* DocumentMessageCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageCellCustom.swift; sourceTree = "<group>"; };
+		80844A39269995A000C1D704 /* DocumentMessageCellCustom_Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageCellCustom_Reply.swift; sourceTree = "<group>"; };
+		80844A3C269995F300C1D704 /* DocumentMessageSizeCalculator_Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageSizeCalculator_Custom.swift; sourceTree = "<group>"; };
+		80844A3F2699960A00C1D704 /* DocumentMessageSizeCalculator_Custom_Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageSizeCalculator_Custom_Reply.swift; sourceTree = "<group>"; };
 		809A0175265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_MessageKitExtensions.swift; sourceTree = "<group>"; };
 		809A0178265F73BE00BE1657 /* MessageKitAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MessageKitAssets.xcassets; sourceTree = "<group>"; };
 		809A017B265F775400BE1657 /* UIKitExtenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtenstions.swift; sourceTree = "<group>"; };
@@ -483,6 +491,8 @@
 				80C3D4E6265D007000ECBFC8 /* AudioMessageCellCustom_Reply.swift */,
 				80C3D4E9265D007D00ECBFC8 /* ContactMessageCellCustom_Reply.swift */,
 				80C3D4EC265D008800ECBFC8 /* LinkPreviewMessageCellCustom_Reply.swift */,
+				80844A362699955500C1D704 /* DocumentMessageCellCustom.swift */,
+				80844A39269995A000C1D704 /* DocumentMessageCellCustom_Reply.swift */,
 			);
 			path = CollectionCells;
 			sourceTree = "<group>";
@@ -502,6 +512,8 @@
 				80C3D507265D036400ECBFC8 /* AudioMessageSizeCalculator_Custom_Reply.swift.swift */,
 				80C3D50A265D036E00ECBFC8 /* ContactMessageSizeCalculator_Custom_Reply.swift.swift */,
 				80C3D50D265D037A00ECBFC8 /* LinkPreviewMessageSizeCalculator_Custom_Reply.swift.swift */,
+				80844A3C269995F300C1D704 /* DocumentMessageSizeCalculator_Custom.swift */,
+				80844A3F2699960A00C1D704 /* DocumentMessageSizeCalculator_Custom_Reply.swift */,
 			);
 			path = CellSizeCalculators;
 			sourceTree = "<group>";
@@ -737,13 +749,17 @@
 				5540A94824F3005000A42392 /* UserTableViewCell.swift in Sources */,
 				5512D8342513C9CD000214D3 /* ChannelDetailTableViewController.swift in Sources */,
 				80C3D4E7265D007000ECBFC8 /* AudioMessageCellCustom_Reply.swift in Sources */,
+				80844A3A269995A000C1D704 /* DocumentMessageCellCustom_Reply.swift in Sources */,
+				80844A402699960A00C1D704 /* DocumentMessageSizeCalculator_Custom_Reply.swift in Sources */,
 				80AE1121262831F000AA26CF /* LocalUser.swift in Sources */,
 				809A0176265E6E4D00BE1657 /* UIView_MessageKitExtensions.swift in Sources */,
 				5599F62924EB1EE500989C70 /* User.swift in Sources */,
+				80844A372699955500C1D704 /* DocumentMessageCellCustom.swift in Sources */,
 				55C5D80424F447E0000B53A1 /* ProfileTableViewController.swift in Sources */,
 				80B560D32658BD62001212AB /* LinkPreviewMessageCellCustom.swift in Sources */,
 				55404AF324E9B63C00844839 /* LoginViewController.swift in Sources */,
 				80C3D4FF265D032F00ECBFC8 /* TextMessageSizeCalculator_Custom_Reply.swift in Sources */,
+				80844A3D269995F300C1D704 /* DocumentMessageSizeCalculator_Custom.swift in Sources */,
 				80D2F32625F886C90030E342 /* TClass1.swift in Sources */,
 				55F4ACE6251147B000C35B6B /* ChannelTableViewCell.swift in Sources */,
 				80C3D4BC265CCE7500ECBFC8 /* MessagesCollectionViewFlowLayout_Custom.swift in Sources */,

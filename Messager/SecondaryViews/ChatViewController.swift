@@ -137,6 +137,9 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.register(AudioMessageCellCustom.self)
         messagesCollectionView.register(LinkPreviewMessageCellCustom.self)
         messagesCollectionView.register(ContactMessageCellCustom.self)
+        messagesCollectionView.register(DocumentMessageCellCustom.self)
+
+        
         
         messagesCollectionView.register(TextMessageCellCustom_Reply.self)
         messagesCollectionView.register(MediaMessageCellCustom_Reply.self)
@@ -144,7 +147,8 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.register(AudioMessageCellCustom_Reply.self)
         messagesCollectionView.register(LinkPreviewMessageCellCustom_Reply.self)
         messagesCollectionView.register(ContactMessageCellCustom_Reply.self)
-        
+        messagesCollectionView.register(DocumentMessageCellCustom_Reply.self)
+
    }
     
     //MARK: - View LifeCycle
@@ -656,7 +660,7 @@ class ChatViewController: MessagesViewController {
         }
         
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        
+        let documentKind = (message as! MKMessage).documentKind
         if !(message as! MKMessage).reply {
             
             switch message.kind {
@@ -665,9 +669,15 @@ class ChatViewController: MessagesViewController {
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 return cell
             case .photo, .video:
+                if documentKind {
+                    let cell = messagesCollectionView.dequeueReusableCell(DocumentMessageCellCustom.self, for: indexPath)
+                    cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                    return cell
+                }else{
                 let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 return cell
+                }
             case .location:
                 let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCellCustom.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
@@ -697,11 +707,19 @@ class ChatViewController: MessagesViewController {
                 // cell.messageLabel.backgroundColor = UIColor.red
                 return cell
             case .photo, .video:
+                if documentKind {
+                    let cell = messagesCollectionView.dequeueReusableCell(DocumentMessageCellCustom_Reply.self, for: indexPath)
+                    cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                    cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
+
+                    return cell
+                }else{
                 let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCellCustom_Reply.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 cell.configureReply(with: (message as! MKMessage), at: indexPath, and: messagesCollectionView)
 
                 return cell
+                }
             case .location:
                 let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCellCustom_Reply.self, for: indexPath)
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)

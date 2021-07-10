@@ -18,6 +18,7 @@ class LocalMessage: Object, Codable {
     @objc dynamic var audioUrl = ""
     @objc dynamic var videoUrl = ""
     @objc dynamic var pictureUrl = ""
+    @objc dynamic var documentUrl = ""
     @objc dynamic var latitude = 0.0
     @objc dynamic var longitude = 0.0
     @objc dynamic var audioDuration = 0.0

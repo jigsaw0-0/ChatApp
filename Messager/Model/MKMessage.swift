@@ -32,7 +32,8 @@ class MKMessage: NSObject, MessageType {
     var previousMsgId = ""
     var previousMsgType = ""
     var reply = false
-    
+    var documentUrl = ""
+    var documentKind = false
     
     init(message: LocalMessage) {
         
@@ -72,6 +73,14 @@ class MKMessage: NSObject, MessageType {
             
             self.kind = MessageKind.audio(audioItem)
             self.audioItem = audioItem
+        
+        case kDOCUMENT:
+            let photoItem = PhotoMessage(path: "")
+            self.kind = MessageKind.photo(photoItem)
+            if message.documentUrl.count > 0 {
+                self.documentKind = true
+            }
+            self.documentUrl = message.documentUrl
             
         default:
             self.kind = MessageKind.text(message.message)
@@ -116,6 +125,16 @@ class MKMessage: NSObject, MessageType {
             
             self.prevMessageKind = MessageKind.audio(audioItem)
             self.audioItem = audioItem
+        
+        case kDOCUMENT:
+            let photoItem = PhotoMessage(path: "")
+            self.prevMessageKind = MessageKind.photo(photoItem)
+            if message.documentUrl.count > 0 {
+                self.documentKind = true
+            }
+            self.documentUrl = message.documentUrl
+            
+            
             
         default:
             self.prevMessageKind = MessageKind.text(message.previousBody)
